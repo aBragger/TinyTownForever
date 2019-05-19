@@ -27,8 +27,8 @@ then the game restarts.
 
 
 var gameWidth = 800;
-var gameHeight = 400;
-var worldWidth = gameWidth + 800;
+var gameHeight = 500;
+var worldWidth = gameWidth + 3200;
 //var game = new Phaser.Game(windowX, windowY, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO);
 var MainMenu = function(game){};
@@ -45,11 +45,14 @@ MainMenu.prototype = {
         game.load.image('lava', 'assets/img/lava.png');
 
         //building assets
-        game.load.atlas('buildingButtons', 'assets/img/housesheet.png', 'assets/img/housesheet.json');
+        game.load.atlas('buildingButtons', 'assets/img/buildingsheet.png', 'assets/img/buildingsheet.json');
+        game.load.atlas('buttons', 'assets/img/buttonsheet.png', 'assets/img/buttonsheet.json')
         //game.load.image('house_5', 'assets/img/house_5.png');
 
         //people assets
-        game.load.image('person', 'assets/img/person.png');
+        game.load.atlas('people', 'assets/img/peoplesheet.png', 'assets/img/peoplesheet.json');
+        game.load.image('stripeguy', 'assets/img/people/P6_bigger.png');
+
 
         //ui assets
         game.load.image('aSign', 'assets/img/aSign.png');
@@ -73,6 +76,7 @@ MainMenu.prototype = {
 
 var buttons;
 var buildings;
+var people;
 var select = 0;
 var currentButton;
 var lava;
@@ -88,11 +92,11 @@ GamePlay.prototype = {
         console.log('GamePlay: preload');
 
         //game Variables
-        groundHeight = 128;
-        houseHeight = 64;
+        groundHeight = 144;
+        houseHeight = 128;
         scrollSpeed = 10;
-        lavaHeight = 64;
-        timeUntilLava = 20000;
+        lavaHeight = 700;
+        timeUntilLava = 60000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
     },
@@ -106,25 +110,26 @@ GamePlay.prototype = {
         sky.fixedToCamera = true;
         sky.inputEnabled = true;
         sky.events.onInputDown.add(skyPressed);
-        //game.add.sprite();
+
         //ground
         grounds = game.add.group();
         ground = grounds.create(0, gameHeight-groundHeight, 'ground');
-        ground.scale.set(20,2);
+        ground.scale.set(100,4);
         ground.inputEnabled = true;
+
         //buttons/ui
         buttons = game.add.group();
-        test = buttons.create(gameWidth/2 - 32,gameHeight-groundHeight/2, 'buildingButtons', 'house_5');
+        selectionButton = buttons.create(gameWidth/2 - 32,gameHeight-groundHeight/2, 'buttons', 'person_button');
         leftArrow = buttons.create(gameWidth/2 -32 - 32, gameHeight-groundHeight/2, 'leftArrow');
         rightArrow = buttons.create(gameWidth/2 +32, gameHeight-groundHeight/2, 'rightArrow');
         buttons.fixedToCamera = true;
-        test.inputEnabled = true;
-        test.input.useHandCursor = true;
+        selectionButton.inputEnabled = true;
+        selectionButton.input.useHandCursor = true;
         leftArrow.inputEnabled = true;
         leftArrow.input.useHandCursor = true;
         rightArrow.inputEnabled = true;
         rightArrow.input.useHandCursor = true;
-        test.events.onInputDown.add(houseButtonPressed, test);
+        selectionButton.events.onInputDown.add(houseButtonPressed, selectionButton);
         rightArrow.events.onInputDown.add(arrowButtonPressed, {"dir": 1});
         leftArrow.events.onInputDown.add(arrowButtonPressed, {"dir": -1});
 
@@ -132,6 +137,8 @@ GamePlay.prototype = {
         buttons.create(gameWidth-10-32,(gameHeight-groundHeight)/2-16, 'dSign');
         //test.x = game.camera.x + gameWidth/2; // for some reason this needs to be set in order to change the x later.
 
+        //people
+        people = game.add.physicsGroup();
 
         //buttons.enableBody = true;
         buildings = game.add.physicsGroup();
@@ -147,7 +154,7 @@ GamePlay.prototype = {
         timer.start();
 
         //create lava
-        lava = game.add.sprite(worldWidth, gameHeight-groundHeight-lavaHeight, 'lava');
+        lava = game.add.sprite(worldWidth, 0, 'lava');
         game.physics.arcade.enable(lava);
 
                 //create music
@@ -158,8 +165,8 @@ GamePlay.prototype = {
 
     },
     update: function() {
-
-        test.frame = currentButton;
+        game.world.bringToTop(people);
+        //test.frame = currentButton;
         if(game.input.keyboard.isDown(Phaser.Keyboard.A)) {
             game.camera.x -= scrollSpeed;
 
@@ -169,6 +176,7 @@ GamePlay.prototype = {
         }
         //overlap of lava and building
         game.physics.arcade.overlap(lava, buildings, lavaHitBuilding, null, this);
+        game.physics.arcade.overlap(lava, people, lavaHitPeople, null, this);
 
         if(lava.body.x < -100){
             lava.destroy();
@@ -208,7 +216,7 @@ GameOver.prototype = {
 
 function houseButtonPressed(test){
     //console.log("houseButtonPressed: " + test.key);
-    select = test.frame;
+    //select = test.frame;
     console.log("building select: " + select);
 }
 
@@ -217,15 +225,26 @@ function skyPressed(){
     newBuilding = new Building(game, 'buildingButtons', select);
 }
 
+var num_of_buttons = 1;
 function arrowButtonPressed(){
     console.log("arrow Button Pressed: " + this.dir);
     currentButton += this.dir;
+    if(currentButton >= num_of_buttons) currentButton = 0;
+    if(currentButton < num_of_buttons) currentButton = num_of_buttons-1;
+    selectionButton.frame = currentButton;
+    select = selectionButton.frame;
 
 }
 
 function lavaHitBuilding(lava, building){
     console.log("lavaHitBuilding");
     building.kill();
+}
+
+function lavaHitPeople(lava, person){
+    console.log("lavaHitPeople")
+    person.kill();
+    
 }
 
 function apocalypseNow(){
