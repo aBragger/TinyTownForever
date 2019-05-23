@@ -225,12 +225,13 @@ function skyPressed(){
     newBuilding = new Building(game, 'buildingButtons', select);
 }
 
-var num_of_buttons = 1;
+var num_of_buttons = 2;
 function arrowButtonPressed(){
     console.log("arrow Button Pressed: " + this.dir);
     currentButton += this.dir;
+    console.log(currentButton);
     if(currentButton >= num_of_buttons) currentButton = 0;
-    if(currentButton < num_of_buttons) currentButton = num_of_buttons-1;
+    if(currentButton < 0) currentButton = num_of_buttons-1;
     selectionButton.frame = currentButton;
     select = selectionButton.frame;
 

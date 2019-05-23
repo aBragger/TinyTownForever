@@ -2,7 +2,7 @@ var releaseFrequency = 1000;
 Building = function(game, key, frame) {
         //creating the new building
         this.placementSound = game.add.audio('placement_sound',10,false);
-        console.log("new building created");
+        console.log("new building created" + frame);
         Phaser.Sprite.call(this, game, game.input.mousePointer.x + game.camera.x, gameHeight-groundHeight-houseHeight, key, select);
 
         this.x = game.input.mousePointer.x + game.camera.x;
