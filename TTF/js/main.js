@@ -14,6 +14,10 @@ CLICK TO PLACE BUILDINGS
 After a while lava will appear and destroy everything you love
 then the game restarts.
 
+
+
+
+TODO: MAKE THE PEOPLE SPAWN IN AN ORDER!
 */
 
 
@@ -58,19 +62,32 @@ MainMenu.prototype = {
         game.load.image('aSign', 'assets/img/aSign.png');
         game.load.image('dSign', 'assets/img/dSign.png');
 
+        //main menu assets
+        game.load.image('startButton', 'assets/img/buttons/start_button.png');
+        game.load.image('controlsButton', 'assets/img/buttons/controls_button.png');
+        game.load.image('creditsButton', 'assets/img/buttons/credits_button.png')
+
         game.load.audio('main_music', ['assets/audio/NormalMainMenu.wav']);
         this.placementSound = game.load.audio('placement_sound', ['assets/audio/Dropitem.wav']);
 
     },
     create: function() {
+        buttonLocationX = gameWidth/2 - 64;
         console.log('MainMenu: create');
-        MenuText = game.add.text(16, 16, 'Welcome to game\nPress spacebar to start\nonly have fun with arrow keys', { fontSize: '16px', fill: '#fff' });
+
+        sky = game.add.sprite(0, 0, 'sky');
+        ground = game.add.sprite(0, gameHeight-144, 'ground');
+        ground.scale.set(100,4);
+        startButton = game.add.sprite(buttonLocationX,0,'startButton');
+        controlsButton = game.add.sprite(buttonLocationX,32,'controlsButton');
+        quitButton = game.add.sprite(buttonLocationX,64,'creditsButton');
+        startButton.inputEnabled = true;
+        startButton.events.onInputDown.add(startGame);
+
+        //MenuText = game.add.text(16, 16, 'Welcome to game\nPress spacebar to start\nonly have fun with arrow keys', { fontSize: '16px', fill: '#fff' });
     },
     update: function() {
         //Title screen logic
-        if(game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
-            game.state.start('GamePlay');
-        }
     }
 }
 
@@ -106,7 +123,6 @@ GamePlay.prototype = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         console.log('GamePlay: create');
         sky = game.add.sprite(0, 0, 'sky');
-
         sky.fixedToCamera = true;
         sky.inputEnabled = true;
         sky.events.onInputDown.add(skyPressed);
@@ -257,6 +273,10 @@ function apocalypseNow(){
     game.input.enabled = false; // prevent all player input
 
 
+}
+
+function startGame(){
+    game.state.start('GamePlay');
 }
 
 function tester(){
