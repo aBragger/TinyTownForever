@@ -1,12 +1,18 @@
 var releaseFrequency = 1000;
-Building = function(game, key, frame) {
+Building = function(game, key, frame, animation) {
         //creating the new building
         this.placementSound = game.add.audio('placement_sound',10,false);
         console.log("new building created" + frame);
-        Phaser.Sprite.call(this, game, game.input.mousePointer.x + game.camera.x, gameHeight-groundHeight-houseHeight, key, select);
+        Phaser.Sprite.call(this, game, 0, 0, key, frame);
+        //this.y = -10;
+        //game.physics.enable(this, Phaser.Physics.ARCADE);
+        if (animation){
+            this.animations.add('idle', ['windmill1', 'windmill2', 'windmill3', 'windmill4', 'windmill5', 'windmill6', 'windmill7', 'windmill8', 'windmill9', 'windmill10', 'windmill11', 'windmill12', 'windmill13', 'windmill14', 'windmill15', 'windmill16']);
+            this.animations.play('idle', 10, true);
+        }
 
         this.x = game.input.mousePointer.x + game.camera.x;
-        this.y = gameHeight-groundHeight-houseHeight;
+        this.y = gameHeight-groundHeight-this.height + 20;
         game.physics.arcade.enable(this);
         if(game.physics.arcade.overlap(this, buildings)){
             console.log("overlapping building")
@@ -43,7 +49,7 @@ Building.prototype.update = function(){
 function personRelease(){
     if (this.population > 0){
         //console.log(this.x);
-        this.owner = new Person(game, this.x + houseHeight/2, this.y + houseHeight-32);
+        this.owner = new Person(game, this.x + houseHeight/2, this.y + this.height-32);
         this.population -= 1;
     }
 }
