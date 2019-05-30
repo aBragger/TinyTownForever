@@ -3,6 +3,8 @@
 var person1 = 'Person1';
 var person1_right = ['Person1_right1', 'Person1_right2', 'Person1_right3', 'Person1_right4', 'Person1_right5', 'Person1_right6'];
 var person1_left = ['Person1_left1', 'Person1_left2', 'Person1_left3', 'Person1_left4', 'Person1_left5', 'Person1_left6'];
+var parson1_right_panic = ['Panic1_right1', 'Panic1_right2','Panic1_right3','Panic1_right4','Panic1_right5','Panic1_right6','Panic1_right7','Panic1_right8',];
+var parson1_left_panic = ['Panic1_left1', 'Panic1_left2','Panic1_left3','Panic1_left4','Panic1_left5','Panic1_left6','Panic1_left7','Panic1_left8',];
 var grey_guy = [person1, person1_right, person1_left];
 
 var person2 = 'Person2';
@@ -69,6 +71,7 @@ var numOfPeople = 12;
 
 
 Person = function(game, xStart, yStart) {
+	this.panic = false;
 	console.log(xStart);
 	this.typeOfPerson;
 	var personType = Math.floor(Math.random()*numOfPeople);

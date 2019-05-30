@@ -45,6 +45,7 @@ MainMenu.prototype = {
     init: function() {
     },
     preload: function() {
+        game.physics.startSystem(Phaser.Physics.ARCADE);
         console.log('mainMenu: preload');
         game.load.image('sky', 'assets/img/sky.png');
         game.load.image('ground', 'assets/img/ground.png');
@@ -62,6 +63,8 @@ MainMenu.prototype = {
         //people assets
         game.load.atlas('people', 'assets/img/peoplesheet.png', 'assets/img/peoplesheet.json');
         game.load.image('stripeguy', 'assets/img/people/P6_bigger.png');
+
+        game.load.atlas('fire', 'assets/img/firesheet.png', 'assets/img/firesheet.json');
 
         //testing panic assets
         game.load.atlas('panic_people', 'assets/img/panicsheet.png', 'assets/img/panicsheet.json');
@@ -176,6 +179,9 @@ GamePlay.prototype = {
         //people
         people = game.add.physicsGroup();
 
+        //fire
+        fires = game.add.physicsGroup();
+
         //buttons.enableBody = true;
         buildings = game.add.physicsGroup();
         game.world.setBounds(0,0,worldWidth,gameHeight);
@@ -260,7 +266,6 @@ function skyPressed(){
     var animation = false;
     if (building_list[select] == 'windmill1'){ animation = true;}
     newBuilding = new Building(game, 'buildingButtons', building_list[select], animation);
-    buildings.add(newBuilding);
 }
 
 var num_of_buttons = 6;
@@ -289,9 +294,15 @@ function lavaHitPeople(lava, person){
 function apocalypseNow(){
     console.log("apocalypse");
     timer.stop();
-    var tween = game.add.tween(transition).to( { alpha: 1 }, 2000, "Linear", true);
-    tween.yoyo(true, 10);
-    //var tween_ = game.add.tween(transition).to( { alpha: 0 }, 2000, "Linear", true);
+    for(var i = 0; i < 1000; i++){
+        new Fire(game, 'fire'); 
+    }
+
+    //correct tweens
+    //var tween = game.add.tween(transition).to( { alpha: 1 }, 2000, "Linear", true);
+    //tween.yoyo(true, 10);
+
+    
     /*lava.body.velocity.x = -lavaSpeed;
     game.camera.follow(lava, null, cameraFollowLavaSpeed); // make the cmera follow the lava
     game.input.enabled = false; // prevent all player input*/
