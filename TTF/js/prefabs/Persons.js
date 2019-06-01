@@ -1,5 +1,16 @@
 
+var last_person_index = 20;
+var person_list = ["INVALID PERSON"];
+for(var i = 1; i <= last_person_index; i++){
+	var person = 'Person'+i;
+	var person_right = ['Person'+i+'_right1', 'Person'+i+'_right2', 'Person'+i+'_right3', 'Person'+i+'_right4', 'Person'+i+'_right5', 'Person'+i+'_right6'];
+	var person_left = ['Person'+i+'_left1', 'Person'+i+'_left2', 'Person'+i+'_left3', 'Person'+i+'_left4', 'Person'+i+'_left5', 'Person'+i+'_left6'];
+	var person_right_panic = ['Panic'+i+'_right1', 'Panic'+i+'_right2','Panic'+i+'_right3','Panic'+i+'_right4','Panic'+i+'_right5','Panic'+i+'_right6','Panic'+i+'_right7','Panic'+i+'_right8'];
+	var person_left_panic = ['Panic'+i+'_left1', 'Panic'+i+'_left2','Panic'+i+'_left3','Panic'+i+'_left4','Panic'+i+'_left5','Panic'+i+'_left6','Panic'+i+'_left7','Panic'+i+'_left8'];
+	person_list.push([person, person_right, person_left, person_right_panic, person_left_panic]);
+}
 
+/*
 var person1 = 'Person1';
 var person1_right = ['Person1_right1', 'Person1_right2', 'Person1_right3', 'Person1_right4', 'Person1_right5', 'Person1_right6'];
 var person1_left = ['Person1_left1', 'Person1_left2', 'Person1_left3', 'Person1_left4', 'Person1_left5', 'Person1_left6'];
@@ -68,24 +79,32 @@ var person11 = 'Person11';
 var person11_right = ['Person11_right1', 'Person11_right2', 'Person11_right3', 'Person11_right4', 'Person11_right5', 'Person11_right6'];
 var person11_left = ['Person11_left1', 'Person11_left2', 'Person11_left3', 'Person11_left4', 'Person11_left5', 'Person11_left6'];
 var chad = [person11, person11_right, person11_left, person7_right_panic, person7_left_panic];
-/*
+
 var dog = 'Person1';
 var person1_right = ['Person1_right1', 'Person1_right2', 'Person1_right3', 'Person1_right4', 'Person1_right5', 'Person1_right6'];
 var person1_left = ['Person1_left1', 'Person1_left2', 'Person1_left3', 'Person1_left4', 'Person1_left5', 'Person1_left6'];
-var NAME = [person1, person1_right, person1_left];*/
+var NAME = [person1, person1_right, person1_left];
 
 var dog1 = 'Person1';
 var dog1_right = ['dog1_right1', 'dog1_right2', 'dog1_right3', 'dog1_right4', 'dog1_right5', 'dog1_right6'];
 var dog1_left = ['dog1_left1', 'dog1_left2', 'dog1_left3', 'dog1_left4', 'dog1_left5', 'dog1_left6'];
 var dog= [dog1, dog1_right, dog1_left, person7_right_panic, person7_left_panic];
 var numOfPeople = 12;
-
+*/
 
 
 Person = function(game, xStart, yStart) {
+	console.log("make person now!");
 	this.panic = false;
 	console.log(xStart);
-	this.typeOfPerson;
+	// this.typeOfPerson;
+	var person_id = game.rnd.between(1,last_person_index);
+	while (person_id == 12){
+		var person_id = game.rnd.between(1,last_person_index);
+	}
+	console.log(person_id);
+	this.typeOfPerson = person_list[person_id];
+	/*
 	var personType = Math.floor(Math.random()*numOfPeople);
 	switch (personType) {
 		case 0:
@@ -124,9 +143,10 @@ Person = function(game, xStart, yStart) {
   		case 11:
 			this.typeOfPerson = dog;
 			break;
- 
 	}
+ 	*/
 
+ 	console.log(this.typeOfPerson);
 
 	Phaser.Sprite.call(this, game, xStart, yStart, 'people', this.typeOfPerson[0]);
 	this.animations.add('right', this.typeOfPerson[1]);
@@ -155,9 +175,9 @@ Person.prototype.update = function(){
 
 function panic(person){
 	console.log(person.panic);
-	if(person.typeOfPerson.length > 3){
-		person.panic = true;		
-	}
+	//if(person.typeOfPerson.length > 3){
+		//person.panic = true;		
+	//}
 
 
 }

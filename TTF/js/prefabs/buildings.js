@@ -1,17 +1,23 @@
 var releaseFrequency = 1000;
-Building = function(game, key, frame, animation) {
+Building = function(game, key, frame, xPos, peo_num) {
         //creating the new building
         this.placementSound = game.add.audio('placement_sound',10,false);
         console.log("new building created" + frame);
         Phaser.Sprite.call(this, game, 0, 0, key, frame);
-        //this.y = -10;
-        //game.physics.enable(this, Phaser.Physics.ARCADE);
-        if (animation){
+
+        console.log(peo_num);
+
+
+        if(frame == 'windmill1'){
             this.animations.add('idle', ['windmill1', 'windmill2', 'windmill3', 'windmill4', 'windmill5', 'windmill6', 'windmill7', 'windmill8', 'windmill9', 'windmill10', 'windmill11', 'windmill12', 'windmill13', 'windmill14', 'windmill15', 'windmill16']);
             this.animations.play('idle', 10, true);
         }
+        if(frame == 'tinywindmill1'){
+            this.animations.add('idle', ['tinywindmill1', 'tinywindmill2', 'tinywindmill3', 'tinywindmill4', 'tinywindmill5', 'tinywindmill6', 'tinywindmill7', 'tinywindmill8', 'tinywindmill9', 'tinywindmill10', 'tinywindmill11', 'tinywindmill12', 'tinywindmill13', 'tinywindmill14', 'tinywindmill15', 'tinywindmill16']);
+            this.animations.play('idle', 10, true);
+        }
 
-        this.x = game.input.mousePointer.x + game.camera.x;
+        this.x = xPos;
         this.y = gameHeight-groundHeight-this.height + 20;
         game.physics.arcade.enable(this);
         if(game.physics.arcade.overlap(this, buildings)){
@@ -24,7 +30,7 @@ Building = function(game, key, frame, animation) {
             this.placementSound.play();
 
             //controlling people!
-            this.population = 1;
+            this.population = peo_num;
 
             //timed release of people inside
             //  Create our Timer
@@ -48,8 +54,8 @@ Building.prototype.update = function(){
 
 function personRelease(){
     if (this.population > 0){
-        //console.log(this.x);
-        this.owner = new Person(game, this.x + houseHeight/2, this.y + this.height-32);
+        console.log("make person pre");
+        this.owner = new Person(game, this.x + this.width/2, this.y + this.height-32);
         this.population -= 1;
     }
 }
