@@ -117,6 +117,8 @@ var cameraFollowLavaSpeed;
 
 var timer;
 
+var people_living = [];
+
 var building_list = ['house1', 'Cafe', 'windmill1', 'House', 'cakeHouse', 'apartment'];
 
 var GamePlay = function(game){};
@@ -129,7 +131,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 600;
+        timeUntilLava = 30000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
     },
@@ -294,20 +296,29 @@ function lavaHitPeople(lava, person){
 function apocalypseNow(){
     console.log("apocalypse");
     timer.stop();
-    for(var i = 0; i < 1000; i++){
+
+    /*game.world.forEach(function(people){
+        panic(people);
+    });*/
+
+    //eventually make the fire rain down
+    for(var i = 0; i < 100; i++){
         new Fire(game, 'fire'); 
     }
 
     //correct tweens
-    //var tween = game.add.tween(transition).to( { alpha: 1 }, 2000, "Linear", true);
-    //tween.yoyo(true, 10);
+    var tween = game.add.tween(transition).to( { alpha: 1 }, 2000, "Linear", true);
+    tween.yoyo(true, 10);
 
     
     /*lava.body.velocity.x = -lavaSpeed;
     game.camera.follow(lava, null, cameraFollowLavaSpeed); // make the cmera follow the lava
     game.input.enabled = false; // prevent all player input*/
 
-    //people.forEach();
+    //people.forEach(panic, this, false);
+    for (var i = 0; i < people_living.length; i++) {
+        panic(people_living[i]);
+    }
 
 }
 
