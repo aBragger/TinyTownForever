@@ -92,7 +92,7 @@ MainMenu.prototype = {
 
     },
     create: function() {
-        buttonLocationX = gameWidth/2 - 64;
+        buttonLocationX = gameWidth/2 - 100;
         console.log('MainMenu: create');
 
         //sky = game.add.sprite(0, 0, 'sky');
@@ -105,7 +105,7 @@ MainMenu.prototype = {
         mill = new Building(game, 'buildingButtons', 'tinywindmill1', 366, 10);
 
         startButton = game.add.sprite(buttonLocationX,425,'startButton');
-        instructionsButton = game.add.sprite(0,425,'controlsButton');
+        instructionsButton = game.add.sprite(10,425,'controlsButton');
         creditsButton = game.add.sprite(600,425,'creditsButton');
         startButton.inputEnabled = true;
         startButton.events.onInputDown.add(startGame);
@@ -188,7 +188,7 @@ GamePlay.prototype = {
         leftArrow.events.onInputDown.add(arrowButtonPressed, {"dir": -1});
 
         buttons.create(10,(gameHeight-groundHeight)/2-16, 'aSign');
-        buttons.create(gameWidth-10-32,(gameHeight-groundHeight)/2-16, 'dSign');
+        buttons.create(gameWidth-74,(gameHeight-groundHeight)/2-16, 'dSign');
         //test.x = game.camera.x + gameWidth/2; // for some reason this needs to be set in order to change the x later.
 
         //people
