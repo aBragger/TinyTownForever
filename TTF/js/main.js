@@ -54,6 +54,8 @@ MainMenu.prototype = {
         game.load.image('leftArrow', 'assets/img/buttons/button_left.png');
         game.load.image('rightArrow', 'assets/img/buttons/button_right.png');
         game.load.image('lava', 'assets/img/lava.png');
+        game.load.image('instructions', 'assets/img/instructions_page.png');
+        game.load.image('credits', 'assets/img/credits_page.png');
 
         //building assets
         game.load.atlas('buildingButtons', 'assets/img/buildingsheet.png', 'assets/img/buildingsheet.json');
@@ -62,9 +64,10 @@ MainMenu.prototype = {
 
         //people assets
         game.load.atlas('people', 'assets/img/peoplesheet.png', 'assets/img/peoplesheet.json');
+        game.load.atlas('tiny_people', 'assets/img/tinypeoplesheet.png', 'assets/img/tinypeoplesheet.json');
         game.load.image('stripeguy', 'assets/img/people/P6_bigger.png');
 
-        game.load.atlas('fire', 'assets/img/firesheet.png', 'assets/img/firesheet.json');
+        //game.load.atlas('fire', 'assets/img/firesheet.png', 'assets/img/firesheet.json');
 
         //testing panic assets
         game.load.atlas('panic_people', 'assets/img/panicsheet.png', 'assets/img/panicsheet.json');
@@ -78,7 +81,7 @@ MainMenu.prototype = {
 
         //main menu assets
         game.load.image('startButton', 'assets/img/buttons/start_button.png');
-        game.load.image('controlsButton', 'assets/img/buttons/controls_button.png');
+        game.load.image('controlsButton', 'assets/img/buttons/instructions_button.png');
         game.load.image('creditsButton', 'assets/img/buttons/credits_button.png')
 
         game.load.image('menu_background', 'assets/img/mainMenuBackground.png');
@@ -99,11 +102,11 @@ MainMenu.prototype = {
 
         buildings = game.add.physicsGroup();
         people = game.add.physicsGroup();
-        mill = new Building(game, 'buildingButtons', 'tinywindmill1', 366, 0);
+        mill = new Building(game, 'buildingButtons', 'tinywindmill1', 366, 10);
 
-        startButton = game.add.sprite(buttonLocationX,0,'startButton');
-        instructionsButton = game.add.sprite(buttonLocationX,64,'controlsButton');
-        creditsButton = game.add.sprite(buttonLocationX,128,'creditsButton');
+        startButton = game.add.sprite(buttonLocationX,425,'startButton');
+        instructionsButton = game.add.sprite(0,425,'controlsButton');
+        creditsButton = game.add.sprite(600,425,'creditsButton');
         startButton.inputEnabled = true;
         startButton.events.onInputDown.add(startGame);
         instructionsButton.inputEnabled = true;
@@ -144,7 +147,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 30000;
+        timeUntilLava = 3000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
     },
@@ -277,8 +280,9 @@ GameOver.prototype = {
 function skyPressed(){
     console.log("skyPressed at: X: " + game.input.mousePointer.x);
     var frame = building_list[select];
-
-    newBuilding = new Building(game, 'buildingButtons', frame, game.input.mousePointer.x + game.camera.x, 1);
+    var num_peo = 1;
+    if (frame == 'schoolHouse_v2') num_peo = 3;
+    newBuilding = new Building(game, 'buildingButtons', frame, game.input.mousePointer.x + game.camera.x, num_peo);
 }
 
 var num_of_buttons = 10;
@@ -307,7 +311,7 @@ function lavaHitPeople(lava, person){
 function apocalypseNow(){
     console.log("apocalypse");
     timer.stop();
-
+    game.load.atlas('buildings_grey', 'assets/img/buildingsheet_grey.png', 'assets/img/buildingsheet.json');
     /*game.world.forEach(function(people){
         panic(people);
     });*/
@@ -341,12 +345,29 @@ function instructions(){
     console.log('instructions Button Pressed');
     //this takes the game to the instructions state
     //we could also just make it pop up a menu
-    game.state.start('Instructions');
+    //game.state.start('Instructions');
+    instructionsButton.inputEnabled = false;
+    creditsButton.inputEnabled = false;
+    instructions = game.add.sprite(100,100,'instructions');
+    instructions.inputEnabled = true;
+    instructions.events.onInputDown.add(remove_button, {param1: instructions});
+
     //game.camera.y += 300;
+}
+
+function remove_button(){
+    this.param1.kill();
+    instructionsButton.inputEnabled = true;
+    creditsButton.inputEnabled = true;
 }
 
 function credits(){
     console.log('credits button pressed');
+    credits = game.add.sprite(100,100,'credits');
+    credits.inputEnabled = true;
+    instructionsButton.inputEnabled = false;
+    creditsButton.inputEnabled = false;
+    credits.events.onInputDown.add(remove_button, {param1: credits});
 }
 
 var Instructions = function(game){};

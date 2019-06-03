@@ -1,6 +1,7 @@
 var releaseFrequency = 1000;
 Building = function(game, key, frame, xPos, peo_num) {
         //creating the new building
+        this.name = frame;
         this.placementSound = game.add.audio('placement_sound',10,false);
         console.log("new building created" + frame);
         Phaser.Sprite.call(this, game, 0, 0, key, frame);
@@ -53,9 +54,15 @@ Building.prototype.update = function(){
 }
 
 function personRelease(){
+    console.log("jdaslkfjdlkajfs;ldkjfdsal" + this.name);
     if (this.population > 0){
-        console.log("make person pre");
-        this.owner = new Person(game, this.x + this.width/2, this.y + this.height-32);
+        if (this.name == 'tinywindmill1'){
+            console.log('making a tiny windmill');
+            this.owner = new Person(game, this.x + this.width/2, this.y + this.height, true, 10);
+        }
+        else {
+            console.log('not a tiny building');
+            this.owner = new Person(game, this.x + this.width/2, this.y + this.height-32, false, 30);}
         this.population -= 1;
     }
 }
