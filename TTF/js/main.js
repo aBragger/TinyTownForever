@@ -134,6 +134,7 @@ var cameraFollowLavaSpeed;
 var timer;
 
 var people_living = [];
+var buildings_built = [];
 
 var building_list = ['NewCafe', 'cakeHouse', 'new_house1', 'windmill1', 'schoolHouse_v2', 'shop1', 'tree1', 'tree2', 'tree4', 'venue', 'venue'];
 
