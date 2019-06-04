@@ -37,7 +37,7 @@ TODO:
 var groundHeight = 144;
 var gameWidth = 800;
 var gameHeight = 500;
-var worldWidth = gameWidth + 3200;
+var worldWidth = gameWidth + 6400;
 //var game = new Phaser.Game(windowX, windowY, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO);
 var MainMenu = function(game){};
@@ -48,7 +48,7 @@ MainMenu.prototype = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         console.log('mainMenu: preload');
         game.load.image('sky', 'assets/img/sky.png');
-        game.load.image('ground', 'assets/img/ground.png');
+        game.load.image('ground', 'assets/img/groundtile.png');
         game.load.image('black_back', 'assets/img/black_background.png');
         //game.load.image('houseButton', 'assets/img/house_5.png');
         game.load.image('leftArrow', 'assets/img/buttons/button_left.png');
@@ -80,9 +80,9 @@ MainMenu.prototype = {
         game.load.image('dSign', 'assets/img/dSign.png');
 
         //main menu assets
-        game.load.image('startButton', 'assets/img/buttons/start_button.png');
-        game.load.image('controlsButton', 'assets/img/buttons/instructions_button.png');
-        game.load.image('creditsButton', 'assets/img/buttons/credits_button.png')
+        game.load.image('startButton', 'assets/img/buttons/start_button.png');//W:240H:80 
+        game.load.image('controlsButton', 'assets/img/buttons/instructions_button.png');//W:192H:64
+        game.load.image('creditsButton', 'assets/img/buttons/credits_button.png')//W:192H:64
 
         game.load.image('menu_background', 'assets/img/mainMenuBackground.png');
 
@@ -92,7 +92,7 @@ MainMenu.prototype = {
 
     },
     create: function() {
-        buttonLocationX = gameWidth/2 - 100;
+        buttonLocationX = gameWidth/2 - 120;
         console.log('MainMenu: create');
 
         //sky = game.add.sprite(0, 0, 'sky');
@@ -104,9 +104,9 @@ MainMenu.prototype = {
         people = game.add.physicsGroup();
         mill = new Building(game, 'buildingButtons', 'tinywindmill1', 366, 10);
 
-        startButton = game.add.sprite(buttonLocationX,425,'startButton');
-        instructionsButton = game.add.sprite(10,425,'controlsButton');
-        creditsButton = game.add.sprite(600,425,'creditsButton');
+        startButton = game.add.sprite(buttonLocationX,410,'startButton');
+        instructionsButton = game.add.sprite(70,420,'controlsButton');
+        creditsButton = game.add.sprite(540,420,'creditsButton');
         startButton.inputEnabled = true;
         startButton.events.onInputDown.add(startGame);
         instructionsButton.inputEnabled = true;
@@ -166,10 +166,16 @@ GamePlay.prototype = {
         transition.fixedToCamera = true;
         transition.alpha = 0;
         //ground
-        grounds = game.add.group();
-        ground = grounds.create(0, gameHeight-groundHeight, 'ground');
-        ground.scale.set(100,4);
+        ground = game.add.group();
+        var grounds = ground.create(0, gameHeight-groundHeight, 'ground');
+        //ground.scale.set(100,4);
         ground.inputEnabled = true;
+        
+        for (i = 1; i <= 8; i++)
+        {
+            grounds = ground.create(i*800, gameHeight-groundHeight, 'ground');  
+            i += 1;
+        }
 
         //buttons/ui
         buttons = game.add.group();
