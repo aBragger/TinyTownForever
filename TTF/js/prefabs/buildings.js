@@ -58,7 +58,7 @@ function personRelease(){
     if (this.population > 0){
         if (this.name == 'tinywindmill1'){
             console.log('making a tiny windmill');
-            this.owner = new Person(game, this.x + this.width/2, this.y + this.height, true, 10);
+            this.owner = new Person(game, this.x + this.width/2 + game.rnd.integerInRange(-220, 220), this.y + this.height-10, true, 10);
         }
         else {
             console.log('not a tiny building');
