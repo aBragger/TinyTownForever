@@ -56,12 +56,7 @@ var tinyperson7_left = ['tinyPerson16_left1', 'tinyPerson16_left2', 'tinyPerson1
 var tinyperson7_full = [tinyperson7, tinyperson7_right, tinyperson7_left];
 tiny_person_list.push(tinyperson7_full);
 
-// tinydog1
-//var tinyperson8 = 'tinydog1_left1';
-// var tinyperson8_right = ['tinydog1_right1', 'tinydog1_right2', 'tinydog1_right3', 'tinydog1_right4', 'tinydog1_right5', 'tinydog1_right6'];
-// var tinyperson8_left = ['tinydog1_left1', 'tinydog1_left2', 'tinydog1_left3', 'tinydog1_left4', 'tinydog1_left5', 'tinydog1_left6'];
-// var tinyperson8_full = [tinyperson8, tinyperson8_right, tinyperson8_left];
-// tiny_person_list.push(tinyperson8_full);
+
 
 
 Person = function(game, xStart, yStart, isTiny, speed) {
@@ -117,6 +112,8 @@ function panic(person){
 	//if(person.typeOfPerson.length > 3){
 		//person.panic = true;		
 	//}
+	person.speed = 0;
+	person.animations.stop();
 
 
 }

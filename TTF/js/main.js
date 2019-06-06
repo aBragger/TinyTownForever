@@ -72,7 +72,7 @@ MainMenu.prototype = {
         //testing panic assets
         game.load.atlas('panic_people', 'assets/img/panicsheet.png', 'assets/img/panicsheet.json');
 
-
+        game.load.atlas('greybuildings', 'assets/img/greybuildingsheet.png', 'assets/img/greybuildingsheet.json');
 
 
         //ui assets
@@ -136,7 +136,7 @@ var timer;
 var people_living = [];
 var buildings_built = [];
 
-var building_list = ['NewCafe', 'cakeHouse', 'new_house1', 'windmill1', 'schoolHouse_v2', 'shop1', 'tree1', 'tree2', 'tree4', 'venue', 'venue'];
+var building_list = ['cafe', 'cakeHouse', 'new_house1', 'windmill1', 'schoolHouse_v2', 'shop1', 'tree1', 'tree2', 'tree4', 'venue', 'venue'];
 
 var GamePlay = function(game){};
 GamePlay.prototype = {
@@ -290,6 +290,7 @@ function skyPressed(){
     var num_peo = 1;
     if (frame == 'schoolHouse_v2') num_peo = 3;
     newBuilding = new Building(game, 'buildingButtons', frame, game.input.mousePointer.x + game.camera.x, num_peo);
+    buildings_built.push(newBuilding);
 }
 
 var num_of_buttons = 10;
@@ -336,10 +337,14 @@ function apocalypseNow(){
 
     
     /*lava.body.velocity.x = -lavaSpeed;
-    game.camera.follow(lava, null, cameraFollowLavaSpeed); // make the cmera follow the lava
-    game.input.enabled = false; // prevent all player input*/
+    game.camera.follow(lava, null, cameraFollowLavaSpeed); // make the cmera follow the lava*/
+    //game.input.enabled = false; // prevent all player input
     for (var i = 0; i < people_living.length; i++) {
         panic(people_living[i]);
+    }
+
+    for (var i = 0; i < buildings_built.length; i++){
+        turn_grey(buildings_built[i]);
     }
 
 }

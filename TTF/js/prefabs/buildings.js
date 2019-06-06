@@ -54,7 +54,6 @@ Building.prototype.update = function(){
 }
 
 function personRelease(){
-    console.log("jdaslkfjdlkajfs;ldkjfdsal" + this.name);
     if (this.population > 0){
         if (this.name == 'tinywindmill1'){
             console.log('making a tiny windmill');
@@ -65,4 +64,11 @@ function personRelease(){
             this.owner = new Person(game, this.x + this.width/2, this.y + this.height-32, false, 30);}
         this.population -= 1;
     }
+}
+
+function turn_grey(building){
+    console.log("turning grey");
+    game.add.sprite(building.x,building.y,'greybuildings', building.name);
+    building.population = 0;
+    building.kill();
 }
