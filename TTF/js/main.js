@@ -50,6 +50,7 @@ MainMenu.prototype = {
         game.load.image('sky', 'assets/img/sky.png');
         game.load.image('ground', 'assets/img/groundtile.png');
         game.load.image('black_back', 'assets/img/black_background.png');
+
         //game.load.image('houseButton', 'assets/img/house_5.png');
         game.load.image('leftArrow', 'assets/img/buttons/button_left.png');
         game.load.image('rightArrow', 'assets/img/buttons/button_right.png');
@@ -131,6 +132,10 @@ var timeUntilLava;
 var lavaSpeed;
 var cameraFollowLavaSpeed;
 
+
+var clouds;
+
+
 var timer;
 
 var people_living = [];
@@ -151,6 +156,9 @@ GamePlay.prototype = {
         timeUntilLava = 3000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
+
+        game.load.image('clouds', 'assets/img/clouds/clouds.png');
+
     },
     create: function() {
         currentButton = 0;
@@ -193,10 +201,17 @@ GamePlay.prototype = {
         //selectionButton.events.onInputDown.add(houseButtonPressed, selectionButton);
         rightArrow.events.onInputDown.add(arrowButtonPressed, {"dir": 1});
         leftArrow.events.onInputDown.add(arrowButtonPressed, {"dir": -1});
-
         buttons.create(10,(gameHeight-groundHeight)/2-16, 'aSign');
         buttons.create(gameWidth-74,(gameHeight-groundHeight)/2-16, 'dSign');
         //test.x = game.camera.x + gameWidth/2; // for some reason this needs to be set in order to change the x later.
+
+        
+
+
+        //CLOUDS
+        clouds = game.add.tileSprite(0, 0, worldWidth, 200, 'clouds');
+        //game.add.sprite(0, 0, 'clouds');
+
 
         //people
         buildings = game.add.physicsGroup();
@@ -228,18 +243,34 @@ GamePlay.prototype = {
         music.volume = 2;
         music.play();
 
+
+        game.world.bringToTop(buttons);
+
+
     },
     update: function() {
         game.world.bringToTop(people);
         game.world.bringToTop(transition);
         //test.frame = currentButton;
+
+        clouds.autoScroll(-5,0);
+
         if(game.input.keyboard.isDown(Phaser.Keyboard.A)) {
             game.camera.x -= scrollSpeed;
 
+            if(game.camera.x != 0){
+            clouds.autoScroll(-300,0);
+            }
         }
         else if(game.input.keyboard.isDown(Phaser.Keyboard.D)) {
             game.camera.x += scrollSpeed;
+
+            if(game.camera.x != 6400){
+            clouds.autoScroll(300,0);
+            }
+
         }
+
         //overlap of lava and building
         //game.physics.arcade.overlap(lava, buildings, lavaHitBuilding, null, this);
         //game.physics.arcade.overlap(lava, people, lavaHitPeople, null, this);
