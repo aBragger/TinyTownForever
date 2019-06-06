@@ -108,12 +108,15 @@ Person.prototype.update = function(){
 }
 
 function panic(person){
-	console.log(person.panic);
+	console.log(person.frameName);
 	//if(person.typeOfPerson.length > 3){
 		//person.panic = true;		
 	//}
 	person.speed = 0;
 	person.animations.stop();
+	game.add.sprite(person.x,person.y, 'greypeople', person.frame);
+	person.kill();
+	//person.tint = 0x808080
 
 
 }

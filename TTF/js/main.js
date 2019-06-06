@@ -74,6 +74,7 @@ MainMenu.prototype = {
         game.load.atlas('panic_people', 'assets/img/panicsheet.png', 'assets/img/panicsheet.json');
 
         game.load.atlas('greybuildings', 'assets/img/greybuildingsheet.png', 'assets/img/greybuildingsheet.json');
+        game.load.atlas('greypeople', 'assets/img/greypeoplesheet.png', 'assets/img/peoplesheet.json');
 
 
         //ui assets
@@ -153,7 +154,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 6000;
+        timeUntilLava = 4000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
@@ -366,7 +367,9 @@ function apocalypseNow(){
     var tween = game.add.tween(transition).to( { alpha: 1 }, 20000, "Linear", true);
     tween.yoyo(true, 10);
 
-    
+        for (var i = 0; i < buildings_built.length; i++){
+        turn_grey(buildings_built[i]);
+    }
     /*lava.body.velocity.x = -lavaSpeed;
     game.camera.follow(lava, null, cameraFollowLavaSpeed); // make the cmera follow the lava*/
     //game.input.enabled = false; // prevent all player input
@@ -374,9 +377,7 @@ function apocalypseNow(){
         panic(people_living[i]);
     }
 
-    for (var i = 0; i < buildings_built.length; i++){
-        turn_grey(buildings_built[i]);
-    }
+
 
 }
 
