@@ -77,6 +77,7 @@ MainMenu.prototype = {
         game.load.atlas('panic_people', 'assets/img/panicsheet.png', 'assets/img/panicsheet.json');
 
         game.load.atlas('greybuildings', 'assets/img/greybuildingsheet.png', 'assets/img/greybuildingsheet.json');
+        game.load.atlas('greypeople', 'assets/img/greypeoplesheet.png', 'assets/img/peoplesheet.json');
 
 
         //ui assets
@@ -93,6 +94,7 @@ MainMenu.prototype = {
         game.load.image('menuClouds', 'assets/img/menu_clouds.png');
 
         game.load.audio('main_music', ['assets/audio/GameplayMusic.wav']);
+        game.load.audio('mainMenu_music', ['assets/audio/MainMenu_NoHousesPlaced.wav']);
         this.placementSound = game.load.audio('placement_sound', ['assets/audio/Dropitem.wav']);
         game.world.setBounds(0,0,gameWidth,gameHeight*2);
 
@@ -100,6 +102,11 @@ MainMenu.prototype = {
     create: function() {
         buttonLocationX = gameWidth/2 - 120;
         console.log('MainMenu: create');
+
+        menuMusic = game.add.audio('mainMenu_music', 1, true);
+
+        menuMusic.volume = 1;
+        menuMusic.play();
 
         //sky = game.add.sprite(0, 0, 'sky');
         //ground = game.add.sprite(0, gameHeight-144, 'ground');
@@ -159,7 +166,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 6000;
+        timeUntilLava = 4000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
@@ -243,6 +250,7 @@ GamePlay.prototype = {
         game.physics.arcade.enable(lava);
 
                 //create music
+        game.sound.stopAll();
         music = game.add.audio('main_music',1,true);
 
         music.volume = 2;
@@ -371,7 +379,9 @@ function apocalypseNow(){
     var tween = game.add.tween(transition).to( { alpha: 1 }, 20000, "Linear", true);
     tween.yoyo(true, 10);
 
-    
+        for (var i = 0; i < buildings_built.length; i++){
+        turn_grey(buildings_built[i]);
+    }
     /*lava.body.velocity.x = -lavaSpeed;
     game.camera.follow(lava, null, cameraFollowLavaSpeed); // make the cmera follow the lava*/
     //game.input.enabled = false; // prevent all player input
@@ -379,9 +389,7 @@ function apocalypseNow(){
         panic(people_living[i]);
     }
 
-    for (var i = 0; i < buildings_built.length; i++){
-        turn_grey(buildings_built[i]);
-    }
+
 
 }
 
@@ -396,7 +404,7 @@ function instructions(){
     //game.state.start('Instructions');
     instructionsButton.inputEnabled = false;
     creditsButton.inputEnabled = false;
-    instructions = game.add.sprite(100,100,'instructions');
+    instructions = game.add.sprite(248,78,'instructions');
     instructions.inputEnabled = true;
     instructions.events.onInputDown.add(remove_button, {param1: instructions});
 
@@ -411,7 +419,7 @@ function remove_button(){
 
 function credits(){
     console.log('credits button pressed');
-    credits = game.add.sprite(100,100,'credits');
+    credits = game.add.sprite(248,78,'credits');
     credits.inputEnabled = true;
     instructionsButton.inputEnabled = false;
     creditsButton.inputEnabled = false;
