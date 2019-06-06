@@ -38,6 +38,9 @@ var groundHeight = 144;
 var gameWidth = 800;
 var gameHeight = 500;
 var worldWidth = gameWidth + 6400;
+
+var clouds;
+var menuClouds;
 //var game = new Phaser.Game(windowX, windowY, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO);
 var MainMenu = function(game){};
@@ -86,6 +89,8 @@ MainMenu.prototype = {
         game.load.image('creditsButton', 'assets/img/buttons/credits_button.png')//W:192H:64
 
         game.load.image('menu_background', 'assets/img/mainMenuBackground.png');
+        game.load.image('clouds', 'assets/img/clouds/clouds.png');
+        game.load.image('menuClouds', 'assets/img/menu_clouds.png');
 
         game.load.audio('main_music', ['assets/audio/GameplayMusic.wav']);
         this.placementSound = game.load.audio('placement_sound', ['assets/audio/Dropitem.wav']);
@@ -99,7 +104,10 @@ MainMenu.prototype = {
         //sky = game.add.sprite(0, 0, 'sky');
         //ground = game.add.sprite(0, gameHeight-144, 'ground');
         //ground.scale.set(100,4);
+
+        menuClouds = game.add.tileSprite(0, 0, worldWidth, 200, 'menuClouds');
         game.add.sprite(0,0,'menu_background');
+
 
         buildings = game.add.physicsGroup();
         people = game.add.physicsGroup();
@@ -119,6 +127,7 @@ MainMenu.prototype = {
     },
     update: function() {
         //Title screen logic
+        menuClouds.autoScroll(-7,0);
     }
 }
 
@@ -131,9 +140,6 @@ var lava;
 var timeUntilLava;
 var lavaSpeed;
 var cameraFollowLavaSpeed;
-
-
-var clouds;
 
 
 var timer;
@@ -157,7 +163,6 @@ GamePlay.prototype = {
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
-        game.load.image('clouds', 'assets/img/clouds/clouds.png');
 
     },
     create: function() {
