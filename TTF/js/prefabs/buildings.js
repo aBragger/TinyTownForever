@@ -41,6 +41,8 @@ Building = function(game, key, frame, xPos, peo_num) {
 
             //  Start the timer running
             releaseTimer.start();
+            if(this.name != 'tinywindmill1') buildings_built.push(this);
+            
         }
 
 

@@ -153,7 +153,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 3000;
+        timeUntilLava = 6000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
@@ -321,7 +321,7 @@ function skyPressed(){
     var num_peo = 1;
     if (frame == 'schoolHouse_v2') num_peo = 3;
     newBuilding = new Building(game, 'buildingButtons', frame, game.input.mousePointer.x + game.camera.x, num_peo);
-    buildings_built.push(newBuilding);
+
 }
 
 var num_of_buttons = 10;
