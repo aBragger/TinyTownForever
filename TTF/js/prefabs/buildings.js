@@ -1,5 +1,6 @@
 var releaseFrequency = 1000;
-Building = function(game, key, frame, xPos, peo_num) {
+Building = function(game, key, frame, xPos, peo_num, audio = true) {
+
         //creating the new building
         this.name = frame;
         this.placementSound = game.add.audio('placement_sound',10,false);
@@ -28,7 +29,10 @@ Building = function(game, key, frame, xPos, peo_num) {
         else{
             console.log("new building added to group");
             buildings.add(this);
-            this.placementSound.play();
+
+            if(audio == true){
+                this.placementSound.play();
+            }
 
             //controlling people!
             this.population = peo_num;

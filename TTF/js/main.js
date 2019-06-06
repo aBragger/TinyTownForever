@@ -103,7 +103,7 @@ MainMenu.prototype = {
 
         buildings = game.add.physicsGroup();
         people = game.add.physicsGroup();
-        mill = new Building(game, 'buildingButtons', 'tinywindmill1', 366, 10);
+        mill = new Building(game, 'buildingButtons', 'tinywindmill1', 366, 10, false);
 
         startButton = game.add.sprite(buttonLocationX,410,'startButton');
         instructionsButton = game.add.sprite(70,420,'controlsButton');
