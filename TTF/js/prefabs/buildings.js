@@ -71,7 +71,15 @@ function personRelease(){
         }
         else {
             console.log('not a tiny building');
-            this.owner = new Person(game, this.x + this.width/2, this.y + this.height-32, false, 30);}
+            if(this.name == 'schoolHouse_v2')
+            {
+                this.owner = new Person(game, this.x + this.width/2, this.y + this.height-32, false, 30, false);
+            }
+            else
+            {
+                this.owner = new Person(game, this.x + this.width/2, this.y + this.height-32, false, 30);
+            }
+        }
         this.population -= 1;
     }
 }

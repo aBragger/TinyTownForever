@@ -1,13 +1,21 @@
-
+var idList = [];
+var idIndex = 0;
 var last_person_index = 20;
+var childList = [18 - 1, 19 - 1, 9, 8, 5];
+var childIndex = 0;
 var person_list = ["INVALID PERSON"];
 for(var i = 1; i <= last_person_index; i++){
+	if(i === 12)
+	{
+		continue;
+	}
 	var person = 'Person'+i;
 	var person_right = ['Person'+i+'_right1', 'Person'+i+'_right2', 'Person'+i+'_right3', 'Person'+i+'_right4', 'Person'+i+'_right5', 'Person'+i+'_right6'];
 	var person_left = ['Person'+i+'_left1', 'Person'+i+'_left2', 'Person'+i+'_left3', 'Person'+i+'_left4', 'Person'+i+'_left5', 'Person'+i+'_left6'];
 	var person_right_panic = ['Panic'+i+'_right1', 'Panic'+i+'_right2','Panic'+i+'_right3','Panic'+i+'_right4','Panic'+i+'_right5','Panic'+i+'_right6','Panic'+i+'_right7','Panic'+i+'_right8'];
 	var person_left_panic = ['Panic'+i+'_left1', 'Panic'+i+'_left2','Panic'+i+'_left3','Panic'+i+'_left4','Panic'+i+'_left5','Panic'+i+'_left6','Panic'+i+'_left7','Panic'+i+'_left8'];
 	person_list.push([person, person_right, person_left, person_right_panic, person_left_panic]);
+	idList.push(i>12?i-1:i);
 }
 
 //tiny people
@@ -59,7 +67,7 @@ tiny_person_list.push(tinyperson7_full);
 
 
 
-Person = function(game, xStart, yStart, isTiny, speed) {
+Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.speed = speed;
 	console.log("make person now!");
 	this.panic = false;
@@ -72,9 +80,22 @@ Person = function(game, xStart, yStart, isTiny, speed) {
 	}
 	else{
 		// this.typeOfPerson;
-		var person_id = game.rnd.between(1,last_person_index);
-		while (person_id == 12){
-			var person_id = game.rnd.between(1,last_person_index);
+		if(idIndex++ % idList.length == 0)
+		{
+			shuffle(idList);
+		}
+		if(adult)
+		{
+			var person_id = idList[idIndex % idList.length];
+		}
+		else
+		{
+			if(childIndex++ % childList.length == 0)
+			{
+				shuffle(childList);
+			}
+
+			person_id = childList[childIndex % childList.length];
 		}
 		this.typeOfPerson = person_list[person_id];
 		this.key = 'people';
@@ -117,7 +138,22 @@ function panic(person){
 	game.add.sprite(person.x,person.y, 'greypeople', person.frame);
 	person.kill();
 	//person.tint = 0x808080
+}
 
+function shuffle(list)
+{
+	var currentIndex = list.length, tempVal, randomIndex;
 
+	while(0 !== currentIndex)
+	{
+		randomIndex = game.rnd.between(0, currentIndex - 1);
+		currentIndex--;
+
+		tempVal = list[currentIndex];
+		list[currentIndex] = list[randomIndex];
+		list[randomIndex] = tempVal;
+	}
+
+	return list;
 }
 

@@ -278,7 +278,7 @@ GamePlay.prototype = {
         game.world.bringToTop(transition);
         //test.frame = currentButton;
 
-        clouds.autoScroll(-5,0);
+        clouds.autoScroll(-7,0);
 
         if(game.input.keyboard.isDown(Phaser.Keyboard.A)) {
             game.camera.x -= scrollSpeed;
@@ -345,7 +345,7 @@ function skyPressed(){
     var type_list = building_list[select];
     var frame = type_list[game.rnd.between(0, type_list.length - 1)];
     var num_peo = 1;
-    if (frame == 'schoolHouse_v2') num_peo = 3;
+    if (frame == 'schoolHouse_v2') num_peo = 5;
     newBuilding = new Building(game, 'buildingButtons', frame, game.input.mousePointer.x + game.camera.x, num_peo);
 
 }
