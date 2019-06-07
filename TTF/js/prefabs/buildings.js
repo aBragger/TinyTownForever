@@ -65,6 +65,10 @@ function personRelease(){
             console.log('making a tiny windmill');
             this.owner = new Person(game, this.x + this.width/2 + game.rnd.integerInRange(-220, 220), this.y + this.height-10, true, 10);
         }
+        else if (this.name == 'tree1' || this.name == 'tree2' || this.name == 'tree4')
+        {
+            console.log('this is a tree');
+        }
         else {
             console.log('not a tiny building');
             this.owner = new Person(game, this.x + this.width/2, this.y + this.height-32, false, 30);}
