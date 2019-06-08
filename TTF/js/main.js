@@ -154,6 +154,9 @@ var cameraFollowLavaSpeed;
 var fadeInTime = 1000;
 var endgameTime = 1000;
 
+var apocalypse = false;
+var shakeIntensity = .0001;
+
 var timer;
 
 var people_living = [];
@@ -312,6 +315,10 @@ GamePlay.prototype = {
 
             game.camera.unfollow();
         }
+
+        if(apocalypse == true){
+            shake(shakeIntensity);
+        }
     }
 }
 
@@ -397,6 +404,15 @@ function apocalypseNow(){
     for (var i = 0; i < people_living.length; i++) {
         panic(people_living[i]);
     }
+    apocalypse = true;
+}
+
+function shake(n){
+    game.camera.shake(n, 50);
+
+    n += 0.0001;
+    shakeIntensity = n;
+    return(shakeIntensity);
 }
 
 var timer3;
