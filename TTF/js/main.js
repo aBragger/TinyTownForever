@@ -108,7 +108,7 @@ MainMenu.prototype = {
         menuMusic = game.add.audio('mainMenu_music', 1, true);
 
         menuMusic.volume = 1;
-        //menuMusic.play();
+        menuMusic.play();
 
         //sky = game.add.sprite(0, 0, 'sky');
         //ground = game.add.sprite(0, gameHeight-144, 'ground');
