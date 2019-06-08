@@ -89,6 +89,8 @@ MainMenu.prototype = {
         game.load.image('controlsButton', 'assets/img/buttons/instructions_button.png');//W:192H:64
         game.load.image('creditsButton', 'assets/img/buttons/credits_button.png')//W:192H:64
 
+        game.load.image('replayButton', 'assets/img/buttons/button_replay.png');
+
         game.load.image('menu_background', 'assets/img/mainMenuBackground.png');
         game.load.image('clouds', 'assets/img/clouds/clouds.png');
         game.load.image('menuClouds', 'assets/img/menu_clouds.png');
@@ -150,6 +152,7 @@ var timeUntilLava;
 var lavaSpeed;
 var cameraFollowLavaSpeed;
 var fadeInTime = 1000;
+var endgameTime = 1000;
 
 var timer;
 
@@ -171,6 +174,9 @@ GamePlay.prototype = {
         timeUntilLava = 10000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
+
+        people_living = [];
+        buildings_built = [];
 
 
     },
@@ -384,6 +390,7 @@ function apocalypseNow(){
     timer2.loop(fadeInTime, DOOM, this);
 
     timer2.start();
+    sky.inputEnabled = false;
     /*lava.body.velocity.x = -lavaSpeed;
     game.camera.follow(lava, null, cameraFollowLavaSpeed); // make the cmera follow the lava*/
     //game.input.enabled = false; // prevent all player input
@@ -392,6 +399,7 @@ function apocalypseNow(){
     }
 }
 
+var timer3;
 function DOOM(){
         timer2.stop();
         for (var i = 0; i < buildings_built.length; i++){
@@ -400,8 +408,20 @@ function DOOM(){
         for(var i = 0; i < people_living.length; i++){
             turnPersonGrey(people_living[i]);
         }
+        timer3 = game.time.create(true);
+
+        timer3.loop(endgameTime, endgame, this);
+
+        timer3.start();
 }
 
+function endgame(){
+    timer3.stop();
+    console.log("endgame");
+    var replay = game.add.sprite(game.camera.x, game.camera.y, 'replayButton');
+    replay.inputEnabled = true;
+    replay.events.onInputDown.add(startGame);
+}
 function startGame(){
 
     startMusic = game.add.audio('selection_music', 1, false);
