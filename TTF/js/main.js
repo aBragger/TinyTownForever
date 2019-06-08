@@ -149,7 +149,7 @@ var lava;
 var timeUntilLava;
 var lavaSpeed;
 var cameraFollowLavaSpeed;
-
+var fadeInTime = 1000;
 
 var timer;
 
@@ -365,6 +365,7 @@ function lavaHitPeople(lava, person){
     
 }
 
+var timer2;
 function apocalypseNow(){
     console.log("apocalypse");
     timer.stop();
@@ -373,29 +374,32 @@ function apocalypseNow(){
         panic(people);
     });*/
 
-    //eventually make the fire rain down
-    /*
-    for(var i = 0; i < 100; i++){
-        new Fire(game, 'fire'); 
-    }
-    */
-
     //correct tweens
-    var tween = game.add.tween(transition).to( { alpha: 1 }, 20000, "Linear", true);
-    tween.yoyo(true, 10);
+    var tween = game.add.tween(transition).to( { alpha: 1 }, fadeInTime, "Linear", true);
+    tween.yoyo(true, 100);
 
-        for (var i = 0; i < buildings_built.length; i++){
-        turn_grey(buildings_built[i]);
-    }
+
+    timer2 = game.time.create(true);
+
+    timer2.loop(fadeInTime, DOOM, this);
+
+    timer2.start();
     /*lava.body.velocity.x = -lavaSpeed;
     game.camera.follow(lava, null, cameraFollowLavaSpeed); // make the cmera follow the lava*/
     //game.input.enabled = false; // prevent all player input
     for (var i = 0; i < people_living.length; i++) {
         panic(people_living[i]);
     }
+}
 
-
-
+function DOOM(){
+        timer2.stop();
+        for (var i = 0; i < buildings_built.length; i++){
+        turn_grey(buildings_built[i]);
+        }
+        for(var i = 0; i < people_living.length; i++){
+            turnPersonGrey(people_living[i]);
+        }
 }
 
 function startGame(){
