@@ -14,7 +14,8 @@ for(var i = 1; i <= last_person_index; i++){
 	var person_left = ['Person'+i+'_left1', 'Person'+i+'_left2', 'Person'+i+'_left3', 'Person'+i+'_left4', 'Person'+i+'_left5', 'Person'+i+'_left6'];
 	var person_right_panic = ['Panic'+i+'_right1', 'Panic'+i+'_right2','Panic'+i+'_right3','Panic'+i+'_right4','Panic'+i+'_right5','Panic'+i+'_right6','Panic'+i+'_right7','Panic'+i+'_right8'];
 	var person_left_panic = ['Panic'+i+'_left1', 'Panic'+i+'_left2','Panic'+i+'_left3','Panic'+i+'_left4','Panic'+i+'_left5','Panic'+i+'_left6','Panic'+i+'_left7','Panic'+i+'_left8'];
-	person_list.push([person, person_right, person_left, person_right_panic, person_left_panic]);
+	var person_index = i;
+	person_list.push([person, person_right, person_left, person_right_panic, person_left_panic, person_index]);
 	idList.push(i>12?i-1:i);
 }
 
@@ -71,7 +72,8 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.speed = speed;
 	console.log("make person now!");
 	this.panic = false;
-
+	//this.child = (this.typeOfPerson[0] == 'Person5_right1' || this.typeOfPerson[0] == 'Person8_right1' || this.typeOfPerson[0] == 'Person9_right1' || this.typeOfPerson[0] == 'Person18_right1' || this.typeOfPerson[0] == 'Person19_right1');
+	
 	if(isTiny){
 		var person_id = game.rnd.between(0,last_tiny_person_index);
 		console.log(person_id);
@@ -100,13 +102,22 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 		this.typeOfPerson = person_list[person_id];
 		this.key = 'people';
 	}
-
+	this.child = (this.typeOfPerson[5] == 5 || this.typeOfPerson[5] == 8 || this.typeOfPerson[5] == 9 || this.typeOfPerson[5] == 18 || this.typeOfPerson[5] == 19);
 	Phaser.Sprite.call(this, game, xStart, yStart, this.key, this.typeOfPerson[0]);
 	this.animations.add('right', this.typeOfPerson[1]);
 	this.animations.add('left', this.typeOfPerson[2]);
-	this.animations.add('right_panic', this.typeOfPerson[3]);
-	this.animations.add('left_panic', this.typeOfPerson[4]);
+	if (!this.child){
+		this.animations.add('right_panic', this.typeOfPerson[3]);
+		this.animations.add('left_panic', this.typeOfPerson[4]);
+	}
+	else {
+		this.animations.add('right_panic', this.typeOfPerson[1]);
+		this.animations.add('left_panic', this.typeOfPerson[2]);
+	}
 	this.movement_dir = 0;
+
+
+
 	people.add(this);
 	people_living.push(this);
 };
