@@ -63,10 +63,7 @@ MainMenu.prototype = {
 
         //building assets
         game.load.atlas('buildingButtons', 'assets/img/buildingsheet.png', 'assets/img/buildingsheet.json');
-        game.load.atlas('buttons', 'assets/img/buttonsheet.png', 'assets/img/buttonsheet.json');
-        game.load.image('house1_black', 'assets/img/buildings/new_house1_black.png');
-        game.load.image('shop2', 'assets/img/buildings/shop2.png');
-        game.load.image('shop3', 'assets/img/buildings/shop3.png');
+        game.load.atlas('buttons', 'assets/img/buttonsheet.png', 'assets/img/buttonsheet.json')
         //game.load.image('house_5', 'assets/img/house_5.png');
 
         //people assets
@@ -98,6 +95,8 @@ MainMenu.prototype = {
 
         game.load.audio('main_music', ['assets/audio/GameplayMusic.wav']);
         game.load.audio('mainMenu_music', ['assets/audio/MainMenu_NoHousesPlaced.wav']);
+        game.load.audio('selection_music', ['assets/audio/Selection.wav']);
+    
         this.placementSound = game.load.audio('placement_sound', ['assets/audio/Dropitem.wav']);
         game.world.setBounds(0,0,gameWidth,gameHeight*2);
 
@@ -109,7 +108,7 @@ MainMenu.prototype = {
         menuMusic = game.add.audio('mainMenu_music', 1, true);
 
         menuMusic.volume = 1;
-        menuMusic.play();
+        //menuMusic.play();
 
         //sky = game.add.sprite(0, 0, 'sky');
         //ground = game.add.sprite(0, gameHeight-144, 'ground');
@@ -157,16 +156,7 @@ var timer;
 var people_living = [];
 var buildings_built = [];
 
-var building_list = [['cafe'],
- ['cakeHouse'],
- ['new_house1', 'new_house1_black'], 
- ['windmill1'], 
- ['schoolHouse_v2'], 
- ['shop1', 'shop2', 'shop3'], 
- ['tree1'], 
- ['tree2'], 
- ['tree4'], 
- ['venue']];
+var building_list = ['cafe', 'cakeHouse', 'new_house1', 'windmill1', 'schoolHouse_v2', 'shop1', 'tree1', 'tree2', 'tree4', 'venue', 'venue'];
 
 var GamePlay = function(game){};
 GamePlay.prototype = {
@@ -178,7 +168,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 40000;
+        timeUntilLava = 4000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
@@ -278,7 +268,7 @@ GamePlay.prototype = {
         game.world.bringToTop(transition);
         //test.frame = currentButton;
 
-        clouds.autoScroll(-7,0);
+        clouds.autoScroll(-5,0);
 
         if(game.input.keyboard.isDown(Phaser.Keyboard.A)) {
             game.camera.x -= scrollSpeed;
@@ -342,10 +332,9 @@ GameOver.prototype = {
 
 function skyPressed(){
     console.log("skyPressed at: X: " + game.input.mousePointer.x);
-    var type_list = building_list[select];
-    var frame = type_list[game.rnd.between(0, type_list.length - 1)];
+    var frame = building_list[select];
     var num_peo = 1;
-    if (frame == 'schoolHouse_v2') num_peo = 5;
+    if (frame == 'schoolHouse_v2') num_peo = 3;
     newBuilding = new Building(game, 'buildingButtons', frame, game.input.mousePointer.x + game.camera.x, num_peo);
 
 }
@@ -353,6 +342,9 @@ function skyPressed(){
 var num_of_buttons = 10;
 function arrowButtonPressed(){
     console.log("arrow Button Pressed: " + this.dir);
+    arrowbuttonMusic = game.add.audio('selection_music', 1, false);
+    arrowbuttonMusic.volume = 3;
+    arrowbuttonMusic.play();
     currentButton += this.dir;
     console.log(currentButton);
     if(currentButton >= num_of_buttons) currentButton = 0;
@@ -407,6 +399,11 @@ function apocalypseNow(){
 }
 
 function startGame(){
+
+    startMusic = game.add.audio('selection_music', 1, false);
+    startMusic.volume = 3;
+    startMusic.play();
+
     game.state.start('GamePlay');
 }
 
@@ -417,6 +414,11 @@ function instructions(){
     //game.state.start('Instructions');
     instructionsButton.inputEnabled = false;
     creditsButton.inputEnabled = false;
+
+    instructionMusic = game.add.audio('selection_music', 1, false);
+    instructionMusic.volume = 3;
+    instructionMusic.play();
+
     instructions = game.add.sprite(248,78,'instructions');
     instructions.inputEnabled = true;
     instructions.events.onInputDown.add(remove_button, {param1: instructions});
@@ -426,12 +428,22 @@ function instructions(){
 
 function remove_button(){
     this.param1.kill();
+
+    removeMusic = game.add.audio('selection_music', 1, false);
+    removeMusic.volume = 3;
+    removeMusic.play();
+
     instructionsButton.inputEnabled = true;
     creditsButton.inputEnabled = true;
 }
 
 function credits(){
     console.log('credits button pressed');
+
+    creditsMusic = game.add.audio('selection_music', 1, false);
+    creditsMusic.volume = 3;
+    creditsMusic.play();
+
     credits = game.add.sprite(248,78,'credits');
     credits.inputEnabled = true;
     instructionsButton.inputEnabled = false;
