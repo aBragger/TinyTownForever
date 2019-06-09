@@ -151,7 +151,7 @@ var lava;
 var timeUntilLava;
 var lavaSpeed;
 var cameraFollowLavaSpeed;
-var fadeInTime = 1000;
+var fadeInTime = 6000;
 var endgameTime = 1000;
 
 var apocalypse = false;
@@ -196,11 +196,13 @@ GamePlay.prototype = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         console.log('GamePlay: create');
         sky = game.add.sprite(0, 0, 'sky');
+        sky.anchor.set(0.5, 0.5);
         sky.fixedToCamera = true;
         sky.inputEnabled = true;
         sky.events.onInputDown.add(skyPressed);
 
         transition = game.add.sprite(0,0, 'black_back');
+        transition.anchor.set(0.5, 0.5);
         transition.fixedToCamera = true;
         transition.alpha = 0;
         //ground
