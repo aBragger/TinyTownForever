@@ -551,7 +551,12 @@ function credits(){
 }
 
 function face(sprite){
-    if(sprite.typeOfPerson[5] == 12){
+/*
+    if(person.typeOfPerson[5] == 12){
+        make the clown sound;
+    }
+*/
+    if(sprite.clown == 12){
         console.log("this is a clown.");
         sprite.animations.play('right', 3, true);
         game.time.events.add(5000,function(sprite){
