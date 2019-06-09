@@ -134,7 +134,7 @@ MainMenu.prototype = {
 
         people.inputEnabled = false;
 
-        mill = new Building(game, 'buildingButtons', 'tinywindmill1', 366, 10, false);
+        mill = new Building(game, 'buildingButtons', 'tinywindmill1', game.world.width/2, 10, false);
 
         startButton = game.add.sprite(buttonLocationX,410,'startButton');
         instructionsButton = game.add.sprite(70,420,'controlsButton');

@@ -6,6 +6,7 @@ Building = function(game, key, frame, xPos, peo_num, audio = true) {
         this.placementSound = game.add.audio('placement_sound',10,false);
         console.log("new building created" + frame);
         Phaser.Sprite.call(this, game, 0, 0, key, frame);
+        //this.anchor.set(0.5,0);
 
         console.log(peo_num);
 
@@ -19,7 +20,7 @@ Building = function(game, key, frame, xPos, peo_num, audio = true) {
             this.animations.play('idle', 10, true);
         }
 
-        this.x = xPos;
+        this.x = xPos - this.width / 2;
         this.y = gameHeight-groundHeight-this.height + 20;
         game.physics.arcade.enable(this);
         if(game.physics.arcade.overlap(this, buildings)){
@@ -86,7 +87,8 @@ function personRelease(){
 
 function turn_grey(building){
     console.log("turning grey");
-    game.add.sprite(building.x,building.y,'greybuildings', building.name);
+    var grayBuilding = game.add.sprite(building.x,building.y,'greybuildings', building.name);
+    grayBuilding.anchor.set(0.5, 0);
     building.population = 0;
     building.kill();
 }
