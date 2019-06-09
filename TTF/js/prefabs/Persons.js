@@ -74,6 +74,8 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.panic = false;
 	//this.child = (this.typeOfPerson[0] == 'Person5_right1' || this.typeOfPerson[0] == 'Person8_right1' || this.typeOfPerson[0] == 'Person9_right1' || this.typeOfPerson[0] == 'Person18_right1' || this.typeOfPerson[0] == 'Person19_right1');
 	
+  
+	
 	if(isTiny){
 		var person_id = game.rnd.between(0,last_tiny_person_index);
 		console.log(person_id);
@@ -121,6 +123,9 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	people.add(this);
 	people_living.push(this);
 };
+
+
+
 
 Person.prototype = Object.create(Phaser.Sprite.prototype);
 Person.prototype.constructor = Person;

@@ -84,6 +84,15 @@ MainMenu.prototype = {
         game.load.image('aSign', 'assets/img/aSign.png');
         game.load.image('dSign', 'assets/img/dSign.png');
 
+        //emoji assets
+        game.load.image('emoji1','assets/img/emoji/emoji1.png');
+        game.load.image('emoji2','assets/img/emoji/emoji2.png');
+        game.load.image('emoji3','assets/img/emoji/emoji3.png');
+        game.load.image('emoji4','assets/img/emoji/emoji4.png');
+        game.load.image('emoji5','assets/img/emoji/emoji5.png');
+        game.load.image('emoji6','assets/img/emoji/emoji6.png');
+        game.load.image('emoji7','assets/img/emoji/emoji7.png');
+        game.load.image('emoji8','assets/img/emoji/emoji8.png');
         //main menu assets
         game.load.image('startButton', 'assets/img/buttons/start_button.png');//W:240H:80 
         game.load.image('controlsButton', 'assets/img/buttons/instructions_button.png');//W:192H:64
@@ -122,6 +131,9 @@ MainMenu.prototype = {
 
         buildings = game.add.physicsGroup();
         people = game.add.physicsGroup();
+
+        people.inputEnabled = false;
+
         mill = new Building(game, 'buildingButtons', 'tinywindmill1', 366, 10, false);
 
         startButton = game.add.sprite(buttonLocationX,410,'startButton');
@@ -247,6 +259,16 @@ GamePlay.prototype = {
         //people
         buildings = game.add.physicsGroup();
         people = game.add.physicsGroup();
+
+        //add emoji
+        
+        people.inputEnableChildren = true;
+        people.onChildInputDown.add(face,this);
+
+
+
+        //people.inputEnabled = true;
+        //people.events.onInputDown.add(face,this);
 
         //fire
         fires = game.add.physicsGroup();
@@ -517,6 +539,19 @@ function credits(){
     instructionsButton.inputEnabled = false;
     creditsButton.inputEnabled = false;
     credits.events.onInputDown.add(remove_button, {param1: credits});
+}
+
+function face(sprite){
+    console.log('make a face');
+    var faceselect, numberselect;
+    numberselect = game.rnd.between(1,8);
+    faceselect = 'emoji' + numberselect;
+    emoji = sprite.addChild(game.add.sprite(1, 1,faceselect));
+    emoji.fixedToCamera = false;
+
+    game.time.events.add(500,function(){emoji.kill();}, this);
+    //emoji = game.add.sprite(buildings.position.x,people.position.y,'emoji2');
+
 }
 
 var Instructions = function(game){};
