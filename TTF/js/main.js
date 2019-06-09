@@ -72,7 +72,7 @@ MainMenu.prototype = {
         game.load.atlas('tiny_people', 'assets/img/tinypeoplesheet.png', 'assets/img/tinypeoplesheet.json');
         game.load.image('stripeguy', 'assets/img/people/P6_bigger.png');
 
-        //game.load.atlas('fire', 'assets/img/firesheet.png', 'assets/img/firesheet.json');
+        game.load.atlas('fire', 'assets/img/firesheet.png', 'assets/img/firesheet.json');
 
         //testing panic assets
         game.load.atlas('panic_people', 'assets/img/panicsheet.png', 'assets/img/panicsheet.json');
@@ -419,6 +419,9 @@ function apocalypseNow(){
     console.log("apocalypse");
     timer.stop();
     game.load.atlas('buildings_grey', 'assets/img/buildingsheet_grey.png', 'assets/img/buildingsheet.json');
+    for(var i = 0; i < 100; i++){
+        new Fire(game, 'fire');
+    }
     /*game.world.forEach(function(people){
         panic(people);
     });*/
@@ -556,7 +559,7 @@ function face(sprite){
         make the clown sound;
     }
 */
-    if(sprite.clown == 12){
+    if(sprite.clown){
         console.log("this is a clown.");
         sprite.animations.play('right', 3, true);
         game.time.events.add(5000,function(sprite){

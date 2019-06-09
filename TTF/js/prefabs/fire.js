@@ -2,16 +2,22 @@
 Fire = function(game, key) {
         console.log("fire");
 
-        Phaser.Sprite.call(this, game, getRandomInt(0,game.width), getRandomInt(0,game.height), 'fire', 0);
+
+
+        Phaser.Sprite.call(this, game, getRandomInt(0,worldWidth), -1*getRandomInt(0,game.height), 'fire', 0);
+        this.animations.add('burn', ['fireball1','fireball2','fireball3','fireball4','fireball5','fireball6']);
+        this.animations.play('burn', 10, true);
         fires.add(this);
+        
 
         game.physics.enable(this);
         this.body.allowGravity = true;
         this.body.gravity.y = 30;
         this.body.velocity = 100;
 
-        this.body.angularVelocity = game.rnd.integerInRange(-180,180);
-        this.horVel = Math.random();
+        //this.body.angularVelocity = game.rnd.integerInRange(-180,180);
+        this.horVel = -1;
+        this.angle = 20;
 };
 
 Fire.prototype = Object.create(Phaser.Sprite.prototype);
