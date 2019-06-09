@@ -102,17 +102,12 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 		this.key = 'people';
 	}
 	this.child = (this.typeOfPerson[5] == 5 || this.typeOfPerson[5] == 8 || this.typeOfPerson[5] == 9 || this.typeOfPerson[5] == 18 || this.typeOfPerson[5] == 19);
+	this.clown = (this.typeOfPerson[5] == 12);
 	Phaser.Sprite.call(this, game, xStart, yStart, this.key, this.typeOfPerson[0]);
 	this.animations.add('right', this.typeOfPerson[1]);
 	this.animations.add('left', this.typeOfPerson[2]);
-	if (!this.child){
-		this.animations.add('right_panic', this.typeOfPerson[3]);
-		this.animations.add('left_panic', this.typeOfPerson[4]);
-	}
-	else {
-		this.animations.add('right_panic', this.typeOfPerson[1]);
-		this.animations.add('left_panic', this.typeOfPerson[2]);
-	}
+	this.animations.add('right_panic', this.typeOfPerson[3]);
+	this.animations.add('left_panic', this.typeOfPerson[4]);
 	this.movement_dir = 0;
 
 
@@ -131,7 +126,6 @@ Person.prototype.update = function(){
 	this.body.velocity.x += game.rnd.integerInRange(-.5,.5);
 	if(this.body.velocity.x > this.speed) this.body.velocity.x = this.speed;
 	else if(this.body.velocity.x < -(this.speed)) this.body.velocity.x = -(this.speed);
-	//if(this.typeOfPerson[5] != 12){ // if the character is not a clown
 		if(this.body.velocity.x > 0 ){
 			if(!this.panic)this.animations.play('right', 3, true);
 			else this.animations.play('right_panic', 3, true);
@@ -140,13 +134,14 @@ Person.prototype.update = function(){
 			if(!this.panic)this.animations.play('left', 3, true);
 			else this.animations.play('left_panic', 3, true);
 		}
-	//}
-	//else{this.body.velocity = 0;}
 }
 
 function panic(person){
-	person.speed = 25;
-	person.panic = true;		
+	
+	if(!person.child && !person.clown){
+		person.speed = 25;
+		person.panic = true;
+	} 		
 	
 }
 
