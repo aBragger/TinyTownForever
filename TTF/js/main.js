@@ -155,6 +155,7 @@ var fadeInTime = 1000;
 var endgameTime = 1000;
 
 var apocalypse = false;
+var grey = false;
 var shakeIntensity = .0001;
 
 var timer;
@@ -185,6 +186,11 @@ GamePlay.prototype = {
     },
     create: function() {
         currentButton = 0;
+
+        apocalypse = false;
+		grey = false;
+		shakeIntensity = .0001;
+		select = 0;
 
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -316,8 +322,13 @@ GamePlay.prototype = {
             game.camera.unfollow();
         }
 
-        if(apocalypse == true){
+        if(apocalypse == true && grey == false){
             shake(shakeIntensity);
+        }
+
+        if(apocalypse == true && grey == true && shakeIntensity > 0)
+        {
+        	shiver(shakeIntensity);
         }
     }
 }
@@ -415,6 +426,15 @@ function shake(n){
     return(shakeIntensity);
 }
 
+function shiver(n)
+{
+	game.camera.shake(n, 50);
+
+	n -= 0.0001;
+	shakeIntensity = n;
+	return (shakeIntensity);
+}
+
 var timer3;
 function DOOM(){
         timer2.stop();
@@ -424,11 +444,17 @@ function DOOM(){
         for(var i = 0; i < people_living.length; i++){
             turnPersonGrey(people_living[i]);
         }
+
+        grey = true;
+        console.log(grey);
+
         timer3 = game.time.create(true);
 
         timer3.loop(endgameTime, endgame, this);
 
         timer3.start();
+
+        return(grey);
 }
 
 function endgame(){
