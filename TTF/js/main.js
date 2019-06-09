@@ -74,6 +74,8 @@ MainMenu.prototype = {
 
         //game.load.atlas('fire', 'assets/img/firesheet.png', 'assets/img/firesheet.json');
 
+        game.load.atlas('birds', 'assets/img/birds.png', 'assets/img/birds.json');
+
         //testing panic assets
         game.load.atlas('panic_people', 'assets/img/panicsheet.png', 'assets/img/panicsheet.json');
 
@@ -158,6 +160,7 @@ MainMenu.prototype = {
 var buttons;
 var buildings;
 var people;
+var birds;
 var select = 0;
 var currentButton;
 var lava;
@@ -171,12 +174,17 @@ var apocalypse = false;
 var grey = false;
 var shakeIntensity = .0001;
 
+var birdTimer;
+var timeHop = 1000;
+
 var timer;
 
 var people_living = [];
 var buildings_built = [];
 
 var building_list = ['cafe', 'cakeHouse', 'new_house1', 'windmill1', 'schoolHouse_v2', 'shop1', 'tree1', 'tree2', 'tree4', 'venue', 'venue'];
+
+var bird_list = ['bird1', 'bird2', 'bird3', 'bird4', 'bird5'];
 
 var GamePlay = function(game){};
 GamePlay.prototype = {
@@ -250,6 +258,28 @@ GamePlay.prototype = {
         //test.x = game.camera.x + gameWidth/2; // for some reason this needs to be set in order to change the x later.
 
         
+
+        //BIRDS
+		birds = game.add.group();
+		birds.enableBody = true;
+
+		console.log('bird'+game.rnd.between(1, 5));
+		for(i = 0; i < 20; i++)
+		{
+			var bird = birds.create(game.rnd.between(0, worldWidth), gameHeight - 160, 'birds', 'bird'+game.rnd.between(1, 5));
+		}
+
+		birdTimer = game.time.create(true);
+		birdTimer.loop(timeHop, birdHop, this);
+		birdTimer.start();
+
+		birds.forEach(function(bird)
+		{
+			//bird.body.velocity.x = game.rnd.between(-10, 10); //set speed
+
+
+		}, this);
+
 
 
         //CLOUDS
@@ -325,6 +355,7 @@ GamePlay.prototype = {
             }
 
         }
+
 
         //overlap of lava and building
         //game.physics.arcade.overlap(lava, buildings, lavaHitBuilding, null, this);
@@ -440,6 +471,14 @@ function apocalypseNow(){
     for (var i = 0; i < people_living.length; i++) {
         panic(people_living[i]);
     }
+
+    //birds
+    birds.forEach(function(bird)
+	{
+		bird.body.velocity.y = game.rnd.between (-400, -600);
+		bird.body.velocity.x = game.rnd.between (-500, 500);
+	}, this);
+
     apocalypse = true;
 }
 
@@ -504,6 +543,12 @@ function startGame(){
     startMusic.play();
 
     game.state.start('GamePlay');
+}
+
+function birdHop()
+{
+	console.log('bird hop');
+
 }
 
 function instructions(){
