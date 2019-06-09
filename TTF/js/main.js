@@ -53,6 +53,7 @@ MainMenu.prototype = {
         game.load.image('sky', 'assets/img/sky.png');
         game.load.image('ground', 'assets/img/groundtile.png');
         game.load.image('black_back', 'assets/img/black_background.png');
+        game.load.image('sky_apocalypse', 'assets/img/sky_apocalypse.png');
 
         //game.load.image('houseButton', 'assets/img/house_5.png');
         game.load.image('leftArrow', 'assets/img/buttons/button_left.png');
@@ -468,6 +469,13 @@ function DOOM(){
         for(var i = 0; i < people_living.length; i++){
             turnPersonGrey(people_living[i]);
         }
+
+        sky.destroy();
+        sky = game.add.sprite(0, 0, 'sky_apocalypse');
+        game.world.sendToBack(sky);
+
+        clouds.tint = 0xde874e;
+
 
         grey = true;
         console.log(grey);
