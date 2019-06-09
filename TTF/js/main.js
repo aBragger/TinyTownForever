@@ -64,7 +64,11 @@ MainMenu.prototype = {
 
         //building assets
         game.load.atlas('buildingButtons', 'assets/img/buildingsheet.png', 'assets/img/buildingsheet.json');
-        game.load.atlas('buttons', 'assets/img/buttonsheet.png', 'assets/img/buttonsheet.json')
+        game.load.atlas('buttons', 'assets/img/buttonsheet.png', 'assets/img/buttonsheet.json');
+
+        game.load.image('house1_black', 'assets/img/building/new_house1_black.png');
+        game.load.image('shop2', 'assets/img/building/shop2.png');
+        game.load.image('shop3', 'assets/img/building/shop3.png');
         //game.load.image('house_5', 'assets/img/house_5.png');
 
         //people assets
@@ -176,7 +180,7 @@ var timer;
 var people_living = [];
 var buildings_built = [];
 
-var building_list = ['cafe', 'cakeHouse', 'new_house1', 'windmill1', 'schoolHouse_v2', 'shop1', 'tree1', 'tree2', 'tree4', 'venue', 'venue'];
+var building_list = [['cafe'], ['cakeHouse'], ['new_house1', 'new_house1_black'], ['windmill1'], ['schoolHouse_v2'], ['shop1', 'shop2', 'shop3'], ['tree1'], ['tree2'], ['tree4'], ['venue']];
 
 var GamePlay = function(game){};
 GamePlay.prototype = {
@@ -188,7 +192,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 8000;
+        timeUntilLava = 10000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
@@ -381,9 +385,10 @@ GameOver.prototype = {
 
 function skyPressed(){
     console.log("skyPressed at: X: " + game.input.mousePointer.x);
-    var frame = building_list[select];
+    var type_list = building_list[select];
+    var frame = type_list[game.rnd.between(0, type_list.length - 1)];
     var num_peo = 1;
-    if (frame == 'schoolHouse_v2') num_peo = 3;
+    if (frame == 'schoolHouse_v2') num_peo = 5;
     newBuilding = new Building(game, 'buildingButtons', frame, game.input.mousePointer.x + game.camera.x, num_peo);
 
 }
