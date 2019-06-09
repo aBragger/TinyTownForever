@@ -188,7 +188,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 10000;
+        timeUntilLava = 80000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
@@ -551,14 +551,24 @@ function credits(){
 }
 
 function face(sprite){
-    console.log('make a face');
-    var faceselect, numberselect;
-    numberselect = game.rnd.between(1,8);
-    faceselect = 'emoji' + numberselect;
-    emoji = sprite.addChild(game.add.sprite(1, 1,faceselect));
-    emoji.fixedToCamera = false;
+    if(sprite.typeOfPerson[5] == 12){
+        console.log("this is a clown.");
+        sprite.animations.play('right', 3, true);
+        game.time.events.add(5000,function(sprite){
+            sprite.animations.stop();
+            sprite.frameName = 'Person12';
+        }, this, sprite);
+    }
+    else{
+        console.log('make a face');
+        var faceselect, numberselect;
+        numberselect = game.rnd.between(1,8);
+        faceselect = 'emoji' + numberselect;
+        emoji = sprite.addChild(game.add.sprite(1, 1,faceselect));
+        emoji.fixedToCamera = false;
 
-    game.time.events.add(500,function(){emoji.kill();}, this);
+        game.time.events.add(500,function(){emoji.kill();}, this);
+    }
     //emoji = game.add.sprite(buildings.position.x,people.position.y,'emoji2');
 
 }

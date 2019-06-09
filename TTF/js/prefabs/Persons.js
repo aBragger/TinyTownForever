@@ -5,10 +5,7 @@ var childList = [18 - 1, 19 - 1, 9, 8, 5];
 var childIndex = 0;
 var person_list = ["INVALID PERSON"];
 for(var i = 1; i <= last_person_index; i++){
-	if(i === 12)
-	{
-		continue;
-	}
+
 	var person = 'Person'+i;
 	var person_right = ['Person'+i+'_right1', 'Person'+i+'_right2', 'Person'+i+'_right3', 'Person'+i+'_right4', 'Person'+i+'_right5', 'Person'+i+'_right6'];
 	var person_left = ['Person'+i+'_left1', 'Person'+i+'_left2', 'Person'+i+'_left3', 'Person'+i+'_left4', 'Person'+i+'_left5', 'Person'+i+'_left6'];
@@ -122,6 +119,7 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 
 	people.add(this);
 	people_living.push(this);
+	if(this.typeOfPerson[5] == 12){this.speed = 0;}
 };
 
 
@@ -133,15 +131,17 @@ Person.prototype.update = function(){
 	this.body.velocity.x += game.rnd.integerInRange(-.5,.5);
 	if(this.body.velocity.x > this.speed) this.body.velocity.x = this.speed;
 	else if(this.body.velocity.x < -(this.speed)) this.body.velocity.x = -(this.speed);
-
-	if(this.body.velocity.x > 0 ){
-		if(!this.panic)this.animations.play('right', 3, true);
-		else this.animations.play('right_panic', 3, true);
-	}
-	if(this.body.velocity.x < 0){
-		if(!this.panic)this.animations.play('left', 3, true);
-		else this.animations.play('left_panic', 3, true);
-	}
+	//if(this.typeOfPerson[5] != 12){ // if the character is not a clown
+		if(this.body.velocity.x > 0 ){
+			if(!this.panic)this.animations.play('right', 3, true);
+			else this.animations.play('right_panic', 3, true);
+		}
+		if(this.body.velocity.x < 0){
+			if(!this.panic)this.animations.play('left', 3, true);
+			else this.animations.play('left_panic', 3, true);
+		}
+	//}
+	//else{this.body.velocity = 0;}
 }
 
 function panic(person){
