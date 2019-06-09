@@ -137,7 +137,10 @@ Person.prototype.update = function(){
 }
 
 function panic(person){
-	
+	person.inputEnabled = false;
+	if(person.clown){
+		person.animations.play('right', 3, true);
+	}
 	if(!person.child && !person.clown){
 		person.speed = 25;
 		person.panic = true;
