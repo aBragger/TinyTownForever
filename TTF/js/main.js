@@ -187,7 +187,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 10000;
+        timeUntilLava = 100;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
@@ -484,7 +484,7 @@ function DOOM(){
 function endgame(){
     timer3.stop();
     console.log("endgame");
-    var replay = game.add.sprite(game.camera.x, game.camera.y, 'replayButton');
+    var replay = game.add.sprite(game.camera.centerX - 96, game.camera.y + 50, 'replayButton');
     replay.inputEnabled = true;
     replay.events.onInputDown.add(startGame);
 }

@@ -145,7 +145,7 @@ Person.prototype.update = function(){
 }
 
 function panic(person){
-
+	person.speed = 25;
 	person.panic = true;		
 	
 }
