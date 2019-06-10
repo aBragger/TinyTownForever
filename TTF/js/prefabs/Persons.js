@@ -1,6 +1,6 @@
 var idList = [];
 var idIndex = 0;
-var last_person_index = 22;
+var last_person_index = 20;
 var childList = [18 - 1, 19 - 1, 9, 8, 5];
 var childIndex = 0;
 var person_list = ["INVALID PERSON"];
@@ -63,7 +63,7 @@ tiny_person_list.push(tinyperson7_full);
 
 Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.speed = speed;
-	//this.acc = .5;
+	this.acc = .5;
 	this.panic = false;
 
 	if(isTiny){
@@ -114,7 +114,7 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 Person.prototype = Object.create(Phaser.Sprite.prototype);
 Person.prototype.constructor = Person;
 Person.prototype.update = function(){
-	this.body.velocity.x += game.rnd.integerInRange(-.5,.5);
+	this.body.velocity.x += game.rnd.integerInRange(-this.acc,this.acc);
 	if(this.body.velocity.x > this.speed) this.body.velocity.x = this.speed;
 	else if(this.body.velocity.x < -(this.speed)) this.body.velocity.x = -(this.speed);
 		if(this.body.velocity.x > 0 ){
@@ -130,6 +130,7 @@ Person.prototype.update = function(){
 //===========================panic Function========================
 function panic(person){
 	person.inputEnabled = false;
+	person.acc = 20;
 	if(person.clown){
 		person.animations.play('right', 3, true);
 	}
