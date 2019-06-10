@@ -173,8 +173,8 @@ var lava;
 var timeUntilLava;
 var lavaSpeed;
 var cameraFollowLavaSpeed;
-var fadeInTime = 6000;
-var endgameTime = 1000;
+var fadeInTime = 12000;
+var endgameTime = 2000;
 
 var apocalypse = false;
 var grey = false;
@@ -202,7 +202,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 2000;
+        timeUntilLava = 3000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
@@ -391,8 +391,8 @@ GamePlay.prototype = {
         }
 
         if(apocalypse == true && grey == true && shakeIntensity > 0)
-        {
-        	shiver(shakeIntensity);
+        {   
+        	shiver(shakeIntensity - .0003);
         }
     }
 }
@@ -459,9 +459,9 @@ function apocalypseNow(){
     console.log("apocalypse");
     timer.stop();
     menuMusic.stop();
-    
+
     apocalypseMusic = game.add.audio('apocalypse_music', 1, false);
-    apocalypseMusic.volume = 3;
+    apocalypseMusic.volume = 2;
     apocalypseMusic.play();
     
 
