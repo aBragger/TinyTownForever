@@ -69,6 +69,11 @@ function personRelease(){
         else if (this.name == 'tree1' || this.name == 'tree2' || this.name == 'tree4')
         {
             console.log('this is a tree');
+            for(i = 0; i < 5; i++)
+            {
+                var bird = birds.create(game.rnd.between(0, worldWidth),game.rnd.between(gameHeight - 100, gameHeight - 175), 'birds', 'bird'+game.rnd.between(1, 5));
+                bird.anchor.set(0.5,0.5);
+            }
         }
         else {
             console.log('not a tiny building');
