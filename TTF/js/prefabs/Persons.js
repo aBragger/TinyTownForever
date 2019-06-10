@@ -94,6 +94,7 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	}
 	this.child = (this.typeOfPerson[5] == 5 || this.typeOfPerson[5] == 8 || this.typeOfPerson[5] == 9 || this.typeOfPerson[5] == 18 || this.typeOfPerson[5] == 19);
 	this.clown = (this.typeOfPerson[5] == 12);
+	this.dog = (this.typeOfPerson[5] == 21 || this.typeOfPerson[5] == 22);
 	Phaser.Sprite.call(this, game, xStart, yStart, this.key, this.typeOfPerson[0]);
 	this.animations.add('right', this.typeOfPerson[1]);
 	this.animations.add('left', this.typeOfPerson[2]);
@@ -131,7 +132,7 @@ function panic(person){
 	if(person.clown){
 		person.animations.play('right', 3, true);
 	}
-	if(!person.child && !person.clown){
+	if(!person.child && !person.clown && !person.dog){
 		person.speed = 25;
 		person.panic = true;
 	} 		
