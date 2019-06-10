@@ -55,24 +55,16 @@ var tinyperson6_left = ['tinyPerson15_left1', 'tinyPerson15_left2', 'tinyPerson1
 var tinyperson6_full = [tinyperson6, tinyperson6_right, tinyperson6_left];
 tiny_person_list.push(tinyperson6_full);
 
-
 var tinyperson7 = 'tinyPerson16_left1';
 var tinyperson7_right = ['tinyPerson16_right1', 'tinyPerson16_right2', 'tinyPerson16_right3', 'tinyPerson16_right4', 'tinyPerson16_right5', 'tinyPerson16_right6'];
 var tinyperson7_left = ['tinyPerson16_left1', 'tinyPerson16_left2', 'tinyPerson16_left3', 'tinyPerson16_left4', 'tinyPerson16_left5', 'tinyPerson16_left6'];
 var tinyperson7_full = [tinyperson7, tinyperson7_right, tinyperson7_left];
 tiny_person_list.push(tinyperson7_full);
 
-
-
-
 Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.speed = speed;
-	console.log("make person now!");
 	this.panic = false;
-	//this.child = (this.typeOfPerson[0] == 'Person5_right1' || this.typeOfPerson[0] == 'Person8_right1' || this.typeOfPerson[0] == 'Person9_right1' || this.typeOfPerson[0] == 'Person18_right1' || this.typeOfPerson[0] == 'Person19_right1');
-	
-  
-	
+
 	if(isTiny){
 		var person_id = game.rnd.between(0,last_tiny_person_index);
 		console.log(person_id);
@@ -80,7 +72,6 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 		this.key = 'tiny_people';
 	}
 	else{
-		// this.typeOfPerson;
 		if(idIndex++ % idList.length == 0)
 		{
 			shuffle(idList);
@@ -110,15 +101,10 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.animations.add('left_panic', this.typeOfPerson[4]);
 	this.movement_dir = 0;
 
-
-
 	people.add(this);
 	people_living.push(this);
 	if(this.typeOfPerson[5] == 12){this.speed = 0;}
 };
-
-
-
 
 Person.prototype = Object.create(Phaser.Sprite.prototype);
 Person.prototype.constructor = Person;
@@ -136,6 +122,7 @@ Person.prototype.update = function(){
 		}
 }
 
+//===========================panic Function========================
 function panic(person){
 	person.inputEnabled = false;
 	if(person.clown){
@@ -145,9 +132,9 @@ function panic(person){
 		person.speed = 25;
 		person.panic = true;
 	} 		
-	
 }
 
+//==========================turnPersonGrey Function=======================
 function turnPersonGrey(person){
 	person.speed = 0;
 	person.animations.stop();
@@ -155,6 +142,7 @@ function turnPersonGrey(person){
 	person.kill();
 }
 
+//=======================shuffle Function===========================
 function shuffle(list)
 {
 	var currentIndex = list.length, tempVal, randomIndex;
@@ -171,4 +159,3 @@ function shuffle(list)
 
 	return list;
 }
-
