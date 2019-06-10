@@ -383,6 +383,7 @@ function apocalypseNow(){
     timer.stop();
     //music
     menuMusic.stop();
+    music.stop();
     apocalypseMusic = game.add.audio('apocalypse_music', 1, false);
     apocalypseMusic.volume = 2;
     apocalypseMusic.play();
