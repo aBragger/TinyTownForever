@@ -284,6 +284,8 @@ GamePlay.prototype = {
         //stop main menu music create play music
         game.sound.stopAll();
         music = game.add.audio('main_music',1,true);
+        music.volume = 1;
+        music.play();
 
         //bring birds to top
         game.world.bringToTop(birds);
