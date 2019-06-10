@@ -541,6 +541,7 @@ function DOOM(){
 
         timer3.start();
 
+
         return(grey);
 }
 
