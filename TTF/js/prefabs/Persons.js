@@ -1,6 +1,6 @@
 var idList = [];
 var idIndex = 0;
-var last_person_index = 20;
+var last_person_index = 21;
 var childList = [18 - 1, 19 - 1, 9, 8, 5];
 var childIndex = 0;
 var person_list = ["INVALID PERSON"];
