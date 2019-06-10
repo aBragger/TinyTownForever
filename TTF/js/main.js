@@ -115,6 +115,7 @@ MainMenu.prototype = {
         game.load.audio('main_music', ['assets/audio/GameplayMusic.wav']);
         game.load.audio('mainMenu_music', ['assets/audio/MainMenu_NoHousesPlaced.wav']);
         game.load.audio('selection_music', ['assets/audio/Selection.wav']);
+        game.load.audio('apocalypse_music', ['assets/audio/DestroyingTownMusic.wav']);
     
         this.placementSound = game.load.audio('placement_sound', ['assets/audio/Dropitem.wav']);
         game.world.setBounds(0,0,gameWidth,gameHeight*2);
@@ -327,11 +328,11 @@ GamePlay.prototype = {
         game.physics.arcade.enable(lava);
 
                 //create music
-        game.sound.stopAll();
-        music = game.add.audio('main_music',1,true);
+        //game.sound.stopAll();
+        //music = game.add.audio('main_music',1,true);
 
-        music.volume = 2;
-        music.play();
+        //music.volume = 2;
+        //music.play();
 
 
         game.world.bringToTop(buttons);
@@ -452,11 +453,19 @@ function lavaHitPeople(lava, person){
     //person.kill();
     
 }
-
+var apocalypseMusic
 var timer2;
 function apocalypseNow(){
     console.log("apocalypse");
     timer.stop();
+    menuMusic.stop();
+    
+    apocalypseMusic = game.add.audio('apocalypse_music', 1, false);
+    apocalypseMusic.volume = 3;
+    apocalypseMusic.play();
+    
+
+
     game.load.atlas('buildings_grey', 'assets/img/buildingsheet_grey.png', 'assets/img/buildingsheet.json');
     for(var i = 0; i < 100; i++){
         new Fire(game, 'fire');
