@@ -249,7 +249,7 @@ GamePlay.prototype = {
 		for(i = 0; i < 20; i++)
         {
         	let num = game.rnd.between(1,5);
- 			let bird = birds.create(game.rnd.between(0, worldWidth),game.rnd.between(gameHeight - 100, gameHeight - 175), 'birds', 'bird'+num);
+ 			let bird = birds.create(game.rnd.between(0, worldWidth),game.rnd.between(gameHeight - 100, gameHeight - 160), 'birds', 'bird'+num);
     		bird.anchor.set(0.5,0.5);
 
     		bird.animations.add('fly', Phaser.Animation.generateFrameNames('bird'+num+'_left', 1, 6, '', 1), 6, true);
@@ -284,6 +284,9 @@ GamePlay.prototype = {
         //stop main menu music create play music
         game.sound.stopAll();
         music = game.add.audio('main_music',1,true);
+
+        //bring birds to top
+        game.world.bringToTop(birds);
 
         //bring asign and dsign to top
         game.world.bringToTop(buttons);
