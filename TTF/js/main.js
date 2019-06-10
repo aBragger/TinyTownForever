@@ -190,7 +190,7 @@ var buildings_built = [];
 
 var building_list = [['cafe'], ['cakeHouse'], ['new_house1', 'new_house1_black'], ['windmill1'], ['schoolHouse_v2'], ['shop1', 'shop2', 'shop3'], ['tree1'], ['tree2'], ['tree4'], ['venue']];
 
-var bird_list = ['bird1', 'bird2', 'bird3', 'bird4', 'bird5'];
+//var bird_list = ['bird1', 'bird2', 'bird3', 'bird4', 'bird5'];
 
 var GamePlay = function(game){};
 GamePlay.prototype = {
@@ -269,23 +269,17 @@ GamePlay.prototype = {
 		birds = game.add.group();
 		birds.enableBody = true;
 
+
 		console.log('bird'+game.rnd.between(1, 5));
 		for(i = 0; i < 20; i++)
-		{
-			var bird = birds.create(game.rnd.between(0, worldWidth), gameHeight - 160, 'birds', 'bird'+game.rnd.between(1, 5));
-		}
+        {
+        	let num = game.rnd.between(1,5);
+ 			let bird = birds.create(game.rnd.between(0, worldWidth),game.rnd.between(gameHeight - 100, gameHeight - 175), 'birds', 'bird'+num);
+    		bird.anchor.set(0.5,0.5);
 
-		birdTimer = game.time.create(true);
-		birdTimer.loop(timeHop, birdHop, this);
-		birdTimer.start();
-
-		birds.forEach(function(bird)
-		{
-			//bird.body.velocity.x = game.rnd.between(-10, 10); //set speed
-
-
-		}, this);
-
+    		bird.animations.add('fly', Phaser.Animation.generateFrameNames('bird'+num+'_left', 1, 6, '', 1), 6, true);
+        }
+		
 
 
         //CLOUDS
@@ -394,6 +388,18 @@ GamePlay.prototype = {
         {   
         	shiver(shakeIntensity - .0003);
         }
+
+		//birds.forEach(function(bird)
+		//{
+		//	bird.body.velocity.x = game.rnd.between(-10, 10); //set speed
+		//	bird.anchor.set(0.5,0.5);
+        //	bird.body.velocity.x += game.rnd.integerInRange(-.5,.5);
+
+        //	if(bird.body.velocity > 0)
+        //	{
+        //		bird.body.scale.x = -1;
+        //	}
+		//}, this);
     }
 }
 
@@ -495,8 +501,9 @@ function apocalypseNow(){
     //birds
     birds.forEach(function(bird)
 	{
-		bird.body.velocity.y = game.rnd.between (-400, -600);
-		bird.body.velocity.x = game.rnd.between (-500, 500);
+		bird.body.velocity.y = game.rnd.between (-300, -400);
+		bird.body.velocity.x = game.rnd.between (-600, -200);
+		bird.animations.play('fly');
 	}, this);
 
     apocalypse = true;
@@ -530,7 +537,8 @@ function DOOM(){
         }
 
         sky.destroy();
-        sky = game.add.sprite(0, 0, 'sky_apocalypse');
+        sky = game.add.tileSprite(0, 0, worldWidth, gameHeight, 'sky_apocalypse');
+
         game.world.sendToBack(sky);
 
         clouds.tint = 0xde874e;
@@ -557,7 +565,8 @@ function DOOM(){
 function endgame(){
     timer3.stop();
     console.log("endgame");
-    var replay = game.add.sprite(game.camera.centerX - 96, game.camera.y + 50, 'replayButton');
+    var replay = game.add.sprite(game.camera.width/2, game.camera.y + 50, 'replayButton');
+    replay.anchor.set(0.5, 0);
     replay.inputEnabled = true;
     replay.events.onInputDown.add(startGame);
     replay.fixedToCamera = true;
@@ -569,12 +578,6 @@ function startGame(){
     startMusic.play();
 
     game.state.start('GamePlay');
-}
-
-function birdHop()
-{
-	console.log('bird hop');
-
 }
 
 function instructions(){
