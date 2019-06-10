@@ -63,6 +63,7 @@ tiny_person_list.push(tinyperson7_full);
 
 Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.speed = speed;
+	//this.acc = .5;
 	this.panic = false;
 
 	if(isTiny){
@@ -102,8 +103,8 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.animations.add('left_panic', this.typeOfPerson[4]);
 	this.movement_dir = 0;
 
-	if(this.typeOfPerson[5] == 21){this.typeOfPerson[1] = this.typeOfPerson[2];}
-	if(this.typeOfPerson[5] == 22){this.typeOfPerson[1] = this.typeOfPerson[2];}
+	if(this.typeOfPerson[5] == 21){this.typeOfPerson[1] = this.typeOfPerson[2][0];}
+	if(this.typeOfPerson[5] == 22){this.typeOfPerson[1] = this.typeOfPerson[2][0];}
 
 	people.add(this);
 	people_living.push(this);
@@ -133,7 +134,7 @@ function panic(person){
 		person.animations.play('right', 3, true);
 	}
 	if(!person.child && !person.clown && !person.dog){
-		person.speed = 25;
+		person.speed = 50;
 		person.panic = true;
 	} 		
 }
