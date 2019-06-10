@@ -192,7 +192,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 3000;
+        timeUntilLava = 30000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
@@ -658,7 +658,7 @@ function face(sprite){
 
 
     //make the clown juggle
-    if(sprite.clown == 12){
+    if(sprite.clown){
 
         console.log("this is a clown.");
 
