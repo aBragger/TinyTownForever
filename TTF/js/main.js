@@ -201,7 +201,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 10000;
+        timeUntilLava = 2000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
@@ -340,7 +340,9 @@ GamePlay.prototype = {
     },
     update: function() {
         game.world.bringToTop(people);
+        game.world.bringToTop(buttons);
         game.world.bringToTop(transition);
+
         //test.frame = currentButton;
 
         clouds.autoScroll(-5,0);

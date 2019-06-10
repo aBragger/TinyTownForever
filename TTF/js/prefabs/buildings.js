@@ -89,7 +89,7 @@ function turn_grey(building){
     console.log("turning grey");
     var greyBuildingName = building.name;
     console.log(greyBuildingName);
-    var grayBuilding = game.add.sprite(building.x,building.y,'greybuildings', greyBuildingName);
+    var grayBuilding = game.add.sprite(building.x + 150,building.y,'greybuildings', greyBuildingName);
     grayBuilding.anchor.set(0.5, 0);
     building.population = 0;
     building.kill();
