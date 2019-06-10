@@ -110,7 +110,8 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.animations.add('left_panic', this.typeOfPerson[4]);
 	this.movement_dir = 0;
 
-
+	if(this.typeOfPerson[5] == 21){this.typeOfPerson[1] = this.typeOfPerson[2];}
+	if(this.typeOfPerson[5] == 22){this.typeOfPerson[1] = this.typeOfPerson[2];}
 
 	people.add(this);
 	people_living.push(this);
