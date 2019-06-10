@@ -3,7 +3,7 @@ TEAM NUMBER:    45
 TEAM NAME:      TINY TOWN: FOREVER!
 MEMBERS:        AUSTIN BRAGGER, SHUN XU, MARGARET PATRICK, JESSE VILLA
 
-GAME IS A PROTOTYPE
+Final Game
 
 FUNCTIONALITY CURRENTLY IN THE GAME
 
@@ -14,25 +14,7 @@ CLICK TO PLACE BUILDINGS
 After a while lava will appear and destroy everything you love
 then the game restarts.
 
-
-
-
-TODO: 
-1 MAKE THE PEOPLE SPAWN IN AN ORDER!
-Make ground art asset
-make clouds
-make buildings spawn in correct spot.
-TODO:
 */
-
-
-
-
-
-
-
-
-
 
 var groundHeight = 144;
 var gameWidth = 800;
@@ -41,7 +23,6 @@ var worldWidth = gameWidth + 6400;
 
 var clouds;
 var menuClouds;
-//var game = new Phaser.Game(windowX, windowY, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO);
 var MainMenu = function(game){};
 MainMenu.prototype = {
@@ -112,6 +93,20 @@ MainMenu.prototype = {
         this.placementSound = game.load.audio('placement_sound', ['assets/audio/Dropitem.wav']);
         game.world.setBounds(0,0,gameWidth,gameHeight*2);
 
+        //people voice
+        game.load.audio('old1', ['assets/audio/PeopleVoices/Old1.wav']);
+        game.load.audio('old2', ['assets/audio/PeopleVoices/Old2.wav']);
+        game.load.audio('woman', ['assets/audio/PeopleVoices/Woman.m4a']);
+        game.load.audio('woman1', ['assets/audio/PeopleVoices/Woman1.wav']);
+        game.load.audio('woman2', ['assets/audio/PeopleVoices/Woman2.wav']);
+        game.load.audio('man', ['assets/audio/PeopleVoices/Man.m4a']);
+        game.load.audio('man1', ['assets/audio/PeopleVoices/Man1.wav']);
+        game.load.audio('man2', ['assets/audio/PeopleVoices/Man2.wav']);
+        game.load.audio('man3', ['assets/audio/PeopleVoices/Man3.wav']);
+        //game.load.audio('clown', ['assets/audio/PeopleVoices/Clown.wav']);
+
+
+
     },
     create: function() {
         buttonLocationX = gameWidth/2 - 120;
@@ -121,10 +116,6 @@ MainMenu.prototype = {
 
         menuMusic.volume = 1;
         menuMusic.play();
-
-        //sky = game.add.sprite(0, 0, 'sky');
-        //ground = game.add.sprite(0, gameHeight-144, 'ground');
-        //ground.scale.set(100,4);
 
         menuClouds = game.add.tileSprite(0, 0, worldWidth, 200, 'menuClouds');
         game.add.sprite(0,0,'menu_background');
@@ -147,7 +138,6 @@ MainMenu.prototype = {
         creditsButton.inputEnabled = true;
         creditsButton.events.onInputDown.add(credits);
 
-        //MenuText = game.add.text(16, 16, 'Welcome to game\nPress spacebar to start\nonly have fun with arrow keys', { fontSize: '16px', fill: '#fff' });
     },
     update: function() {
         //Title screen logic
@@ -221,7 +211,7 @@ GamePlay.prototype = {
         //ground
         ground = game.add.group();
         var grounds = ground.create(0, gameHeight-groundHeight, 'ground');
-        //ground.scale.set(100,4);
+
         ground.inputEnabled = true;
         
         for (i = 1; i <= 8; i++)
@@ -242,7 +232,6 @@ GamePlay.prototype = {
         leftArrow.input.useHandCursor = true;
         rightArrow.inputEnabled = true;
         rightArrow.input.useHandCursor = true;
-        //selectionButton.events.onInputDown.add(houseButtonPressed, selectionButton);
         rightArrow.events.onInputDown.add(arrowButtonPressed, {"dir": 1});
         leftArrow.events.onInputDown.add(arrowButtonPressed, {"dir": -1});
         buttons.create(10,(gameHeight-groundHeight)/2-16, 'aSign');
@@ -254,28 +243,19 @@ GamePlay.prototype = {
 
         //CLOUDS
         clouds = game.add.tileSprite(0, 0, worldWidth, 200, 'clouds');
-        //game.add.sprite(0, 0, 'clouds');
-
 
         //people
         buildings = game.add.physicsGroup();
         people = game.add.physicsGroup();
 
         //add emoji
-        
         people.inputEnableChildren = true;
         people.onChildInputDown.add(face,this);
-
-
-
-        //people.inputEnabled = true;
-        //people.events.onInputDown.add(face,this);
 
         //fire
         fires = game.add.physicsGroup();
 
-        //buttons.enableBody = true;
-        
+        //set Bounds
         game.world.setBounds(0,0,worldWidth,gameHeight);
 
         //  Create our Timer that destroys itself after running.
@@ -291,14 +271,14 @@ GamePlay.prototype = {
         lava = game.add.sprite(worldWidth, 0, 'lava');
         game.physics.arcade.enable(lava);
 
-                //create music
+        //stop main menu music create play music
         game.sound.stopAll();
         music = game.add.audio('main_music',1,true);
 
         music.volume = 2;
         music.play();
 
-
+        //bring asign and dsign to top
         game.world.bringToTop(buttons);
 
 
@@ -374,10 +354,6 @@ GameOver.prototype = {
         }
     }
 }
-
-/*function houseButtonPressed(test){
-    console.log("building select: " + select);
-}*/
 
 function skyPressed(){
     console.log("skyPressed at: X: " + game.input.mousePointer.x);
@@ -508,9 +484,7 @@ function startGame(){
 
 function instructions(){
     console.log('instructions Button Pressed');
-    //this takes the game to the instructions state
-    //we could also just make it pop up a menu
-    //game.state.start('Instructions');
+
     instructionsButton.inputEnabled = false;
     creditsButton.inputEnabled = false;
 
@@ -551,13 +525,69 @@ function credits(){
 }
 
 function face(sprite){
-/*
-    if(person.typeOfPerson[5] == 12){
-        make the clown sound;
+    //add voice to different people
+
+    if(sprite.typeOfPerson[5] == 7){
+        old1Music = game.add.audio('old1', 1, false);
+        old1Music.volume = 7;
+        old1Music.play();
     }
-*/
+    if(sprite.typeOfPerson[5] == 17){
+        old2Music = game.add.audio('old2', 1, false);
+        old2Music.volume = 7;
+        old2Music.play();
+    }
+    if(sprite.typeOfPerson[5] == 10){
+        womanMusic = game.add.audio('woman', 1, false);
+        womanMusic.volume = 7;
+        womanMusic.play();
+    }
+    if((sprite.typeOfPerson[5] == 15) || (sprite.typeOfPerson[5] == 4)){
+        woman1Music = game.add.audio('woman1', 1, false);
+        woman1Music.volume = 7;
+        woman1Music.play();
+    }
+    if((sprite.typeOfPerson[5] == 16)||(sprite.typeOfPerson[5] == 13)){
+        woman2Music = game.add.audio('woman2', 1, false);
+        woman2Music.volume = 7;
+        woman2Music.play();
+    }
+    if(sprite.typeOfPerson[5] == 1){
+        manMusic = game.add.audio('man', 1, false);
+        manMusic.volume = 7;
+        manMusic.play();
+    }
+    if((sprite.typeOfPerson[5] == 2)|| (sprite.typeOfPerson[5] == 3)){
+        man1Music = game.add.audio('man1', 1, false);
+        man1Music.volume = 7;
+        man1Music.play();
+    }
+    if((sprite.typeOfPerson[5] == 6) ||(sprite.typeOfPerson[5] == 14)){
+        man2Music = game.add.audio('man2', 1, false);
+        man2Music.volume = 7;
+        man2Music.play();
+    }
+    if((sprite.typeOfPerson[5] == 11) ||(sprite.typeOfPerson[5] == 20)){
+        man3Music = game.add.audio('man3', 1, false);
+        man3Music.volume = 7;
+        man3Music.play();
+    }
+
+    // if(sprite.clown == 12){
+    //     clownMusic = game.add.audio('clown', 1, false);
+    //     clownMusic.volume = 7;
+    //     clownMusic.play();
+    // }
+
+
+    //make the clown juggle
     if(sprite.clown == 12){
         console.log("this is a clown.");
+
+        // clownMusic = game.add.audio('clown', 1, false);
+        // clownMusic.volume = 7;
+        // clownMusic.play();
+
         sprite.animations.play('right', 3, true);
         game.time.events.add(5000,function(sprite){
             sprite.animations.stop();
@@ -565,6 +595,7 @@ function face(sprite){
         }, this, sprite);
     }
     else{
+        //make a face for other people
         console.log('make a face');
         var faceselect, numberselect;
         numberselect = game.rnd.between(1,8);
@@ -574,7 +605,6 @@ function face(sprite){
 
         game.time.events.add(500,function(){emoji.kill();}, this);
     }
-    //emoji = game.add.sprite(buildings.position.x,people.position.y,'emoji2');
 
 }
 
