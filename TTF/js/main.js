@@ -52,6 +52,7 @@ MainMenu.prototype = {
         console.log('mainMenu: preload');
         game.load.image('sky', 'assets/img/sky.png');
         game.load.image('ground', 'assets/img/groundtile.png');
+        game.load.image('ground_grey', 'assets/img/groundtilegray.png');
         game.load.image('black_back', 'assets/img/black_background.png');
         game.load.image('sky_apocalypse', 'assets/img/sky_apocalypse.png');
 
@@ -200,7 +201,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 10000;
+        timeUntilLava = 1000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
@@ -522,6 +523,11 @@ function DOOM(){
         game.world.sendToBack(sky);
 
         clouds.tint = 0xde874e;
+        for (i = 0; i <= 8; i++)
+        {
+            grounds = ground.create(i*800, gameHeight-groundHeight, 'ground_grey');  
+            i += 1;
+        }
 
 
         grey = true;
