@@ -107,11 +107,19 @@ MainMenu.prototype = {
         game.load.audio('woman', ['assets/audio/PeopleVoices/Woman.m4a']);
         game.load.audio('woman1', ['assets/audio/PeopleVoices/Woman1.wav']);
         game.load.audio('woman2', ['assets/audio/PeopleVoices/Woman2.wav']);
+        game.load.audio('woman3', ['assets/audio/PeopleVoices/Woman3.wav']);
         game.load.audio('man', ['assets/audio/PeopleVoices/Man.m4a']);
         game.load.audio('man1', ['assets/audio/PeopleVoices/Man1.wav']);
         game.load.audio('man2', ['assets/audio/PeopleVoices/Man2.wav']);
         game.load.audio('man3', ['assets/audio/PeopleVoices/Man3.wav']);
-        //game.load.audio('clown', ['assets/audio/PeopleVoices/Clown.wav']);
+        game.load.audio('clown', ['assets/audio/PeopleVoices/Clown.wav']);
+        game.load.audio('child1', ['assets/audio/PeopleVoices/Child1.wav']);
+        game.load.audio('child2', ['assets/audio/PeopleVoices/Child2.wav']);
+        game.load.audio('child3', ['assets/audio/PeopleVoices/Child3.wav']);
+        game.load.audio('child4', ['assets/audio/PeopleVoices/Child4.wav']);
+        game.load.audio('dog1', ['assets/audio/PeopleVoices/Dog1.wav']);
+        game.load.audio('dog2', ['assets/audio/PeopleVoices/Dog2.wav']);
+
 
 
 
@@ -624,10 +632,15 @@ function face(sprite){
         woman1Music.volume = 7;
         woman1Music.play();
     }
-    if((sprite.typeOfPerson[5] == 16)||(sprite.typeOfPerson[5] == 13)){
+    if(sprite.typeOfPerson[5] == 16){
         woman2Music = game.add.audio('woman2', 1, false);
         woman2Music.volume = 7;
         woman2Music.play();
+    }
+    if(sprite.typeOfPerson[5] == 13){
+        woman3Music = game.add.audio('woman3', 1, false);
+        woman3Music.volume = 7;
+        woman3Music.play();
     }
     if(sprite.typeOfPerson[5] == 1){
         manMusic = game.add.audio('man', 1, false);
@@ -650,21 +663,52 @@ function face(sprite){
         man3Music.play();
     }
 
-    // if(sprite.clown == 12){
-    //     clownMusic = game.add.audio('clown', 1, false);
-    //     clownMusic.volume = 7;
-    //     clownMusic.play();
-    // }
+    if((sprite.typeOfPerson[5] == 5) ||(sprite.typeOfPerson[5] == 19)){
+        child1Music = game.add.audio('child1', 1, false);
+        child1Music.volume = 7;
+        child1Music.play();
+    }
 
+    if(sprite.typeOfPerson[5] == 8){
+        child2Music = game.add.audio('child2', 1, false);
+        child2Music.volume = 7;
+        child2Music.play();
+    }
+
+    if(sprite.typeOfPerson[5] == 9){
+        child3Music = game.add.audio('child3', 1, false);
+        child3Music.volume = 7;
+        child3Music.play();
+    }
+
+    if(sprite.typeOfPerson[5] == 18){
+        child4Music = game.add.audio('child4', 1, false);
+        child4Music.volume = 7;
+        child4Music.play();
+    }
+
+    if(sprite.typeOfPerson[5] == 21){
+        dog1Music = game.add.audio('dog1', 1, false);
+        dog1Music.volume = 7;
+        dog1Music.play();
+    }
+
+    if(sprite.typeOfPerson[5] == 22){
+        dog2Music = game.add.audio('dog2', 1, false);
+        dog2Music.volume = 7;
+        dog2Music.play();
+    }
 
     //make the clown juggle
     if(sprite.clown){
 
         console.log("this is a clown.");
 
-        // clownMusic = game.add.audio('clown', 1, false);
-        // clownMusic.volume = 7;
-        // clownMusic.play();
+
+    //add sound for clown
+        clownMusic = game.add.audio('clown', 1, false);
+        clownMusic.volume = 7;
+        clownMusic.play();
 
         sprite.animations.play('right', 3, true);
         game.time.events.add(5000,function(sprite){
