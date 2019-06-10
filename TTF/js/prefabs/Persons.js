@@ -13,7 +13,7 @@ for(var i = 1; i <= last_person_index; i++){
 	var person_left_panic = ['Panic'+i+'_left1', 'Panic'+i+'_left2','Panic'+i+'_left3','Panic'+i+'_left4','Panic'+i+'_left5','Panic'+i+'_left6','Panic'+i+'_left7','Panic'+i+'_left8'];
 	var person_index = i;
 	person_list.push([person, person_right, person_left, person_right_panic, person_left_panic, person_index]);
-	idList.push(i>12?i-1:i);
+	idList.push(i);
 }
 
 //tiny people
