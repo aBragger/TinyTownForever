@@ -187,7 +187,7 @@ GamePlay.prototype = {
         houseHeight = 128;
         scrollSpeed = 10;
         lavaHeight = 700;
-        timeUntilLava = 30000;
+        timeUntilLava = 80000;
         lavaSpeed = 100;
         cameraFollowLavaSpeed = .005;
 
