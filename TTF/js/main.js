@@ -20,17 +20,19 @@ var groundHeight = 144;
 var gameWidth = 800;
 var gameHeight = 500;
 var worldWidth = gameWidth + 6400;
-
 var clouds;
 var menuClouds;
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO);
+
+//===============================================MAIN MENU STATE================================================================
 var MainMenu = function(game){};
 MainMenu.prototype = {
     init: function() {
     },
+
+    //=====================MainMenu Preload========================================
     preload: function() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        console.log('mainMenu: preload');
         game.load.image('sky', 'assets/img/sky.png');
         game.load.image('ground', 'assets/img/groundtile.png');
         game.load.image('ground_grey', 'assets/img/groundtilegray.png');
@@ -47,27 +49,23 @@ MainMenu.prototype = {
         //building assets
         game.load.atlas('buildingButtons', 'assets/img/buildingsheet.png', 'assets/img/buildingsheet.json');
         game.load.atlas('buttons', 'assets/img/buttonsheet.png', 'assets/img/buttonsheet.json');
-
         game.load.image('house1_black', 'assets/img/building/new_house1_black.png');
         game.load.image('shop2', 'assets/img/building/shop2.png');
         game.load.image('shop3', 'assets/img/building/shop3.png');
-        //game.load.image('house_5', 'assets/img/house_5.png');
 
         //people assets
         game.load.atlas('people', 'assets/img/peoplesheet.png', 'assets/img/peoplesheet.json');
         game.load.atlas('tiny_people', 'assets/img/tinypeoplesheet.png', 'assets/img/tinypeoplesheet.json');
         game.load.image('stripeguy', 'assets/img/people/P6_bigger.png');
-
         game.load.atlas('fire', 'assets/img/firesheet.png', 'assets/img/firesheet.json');
 
+        //bird assets
         game.load.atlas('birds', 'assets/img/birds.png', 'assets/img/birds.json');
 
         //testing panic assets
         game.load.atlas('panic_people', 'assets/img/panicsheet.png', 'assets/img/panicsheet.json');
-
         game.load.atlas('greybuildings', 'assets/img/greybuildingsheet.png', 'assets/img/greybuildingsheet.json');
         game.load.atlas('greypeople', 'assets/img/greypeoplesheet.png', 'assets/img/peoplesheet.json');
-
 
         //ui assets
         game.load.image('aSign', 'assets/img/aSign.png');
@@ -82,17 +80,15 @@ MainMenu.prototype = {
         game.load.image('emoji6','assets/img/emoji/emoji6.png');
         game.load.image('emoji7','assets/img/emoji/emoji7.png');
         game.load.image('emoji8','assets/img/emoji/emoji8.png');
+       
         //main menu assets
         game.load.image('startButton', 'assets/img/buttons/start_button.png');//W:240H:80 
         game.load.image('controlsButton', 'assets/img/buttons/instructions_button.png');//W:192H:64
         game.load.image('creditsButton', 'assets/img/buttons/credits_button.png')//W:192H:64
-
         game.load.image('replayButton', 'assets/img/buttons/button_replay.png');
-
         game.load.image('menu_background', 'assets/img/mainMenuBackground.png');
         game.load.image('clouds', 'assets/img/clouds/clouds.png');
         game.load.image('menuClouds', 'assets/img/menu_clouds.png');
-
         game.load.audio('main_music', ['assets/audio/GameplayMusic.wav']);
         game.load.audio('mainMenu_music', ['assets/audio/MainMenu_NoHousesPlaced.wav']);
         game.load.audio('selection_music', ['assets/audio/Selection.wav']);
@@ -112,23 +108,22 @@ MainMenu.prototype = {
         game.load.audio('man2', ['assets/audio/PeopleVoices/Man2.wav']);
         game.load.audio('man3', ['assets/audio/PeopleVoices/Man3.wav']);
         //game.load.audio('clown', ['assets/audio/PeopleVoices/Clown.wav']);
-
-
-
     },
+
+    //================================MainMenu Create=============================
     create: function() {
         buttonLocationX = gameWidth/2 - 120;
-        console.log('MainMenu: create');
 
+        //audio
         menuMusic = game.add.audio('mainMenu_music', 1, true);
-
         menuMusic.volume = 1;
         menuMusic.play();
 
+        //clouds
         menuClouds = game.add.tileSprite(0, 0, worldWidth, 200, 'menuClouds');
         game.add.sprite(0,0,'menu_background');
 
-
+        //buildings and people
         buildings = game.add.physicsGroup();
         people = game.add.physicsGroup();
 
@@ -145,8 +140,9 @@ MainMenu.prototype = {
         instructionsButton.events.onInputDown.add(instructions);
         creditsButton.inputEnabled = true;
         creditsButton.events.onInputDown.add(credits);
-
     },
+
+    //==========================MainMenu Update===================================
     update: function() {
         //Title screen logic
         menuClouds.autoScroll(-7,0);
@@ -170,9 +166,6 @@ var apocalypse = false;
 var grey = false;
 var shakeIntensity = .0001;
 
-var birdTimer;
-var timeHop = 1000;
-
 var timer;
 
 var people_living = [];
@@ -180,13 +173,11 @@ var buildings_built = [];
 
 var building_list = [['cafe'], ['cakeHouse'], ['new_house1', 'new_house1_black'], ['windmill1'], ['schoolHouse_v2'], ['shop1', 'shop2', 'shop3'], ['tree1'], ['tree2'], ['tree4'], ['venue']];
 
-//var bird_list = ['bird1', 'bird2', 'bird3', 'bird4', 'bird5'];
-
+//===============================================================GAMEPLAY STATE================================================================
 var GamePlay = function(game){};
 GamePlay.prototype = {
+	//==================================GamePlay Preload=================================================
     preload: function() {
-        console.log('GamePlay: preload');
-
         //game Variables
         groundHeight = 144;
         houseHeight = 128;
@@ -198,20 +189,16 @@ GamePlay.prototype = {
 
         people_living = [];
         buildings_built = [];
-
-
     },
+    //=================================GamePlay Create========================================
     create: function() {
         currentButton = 0;
-
         apocalypse = false;
 		grey = false;
 		shakeIntensity = .0001;
 		select = 0;
 
-
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        console.log('GamePlay: create');
         sky = game.add.sprite(0, 0, 'sky');
         sky.anchor.set(0.5, 0.5);
         sky.fixedToCamera = true;
@@ -222,6 +209,7 @@ GamePlay.prototype = {
         transition.anchor.set(0.5, 0.5);
         transition.fixedToCamera = true;
         transition.alpha = 0;
+
         //ground
         ground = game.add.group();
         var grounds = ground.create(0, gameHeight-groundHeight, 'ground');
@@ -250,16 +238,10 @@ GamePlay.prototype = {
         leftArrow.events.onInputDown.add(arrowButtonPressed, {"dir": -1});
         buttons.create(10,(gameHeight-groundHeight)/2-16, 'aSign');
         buttons.create(gameWidth-74,(gameHeight-groundHeight)/2-16, 'dSign');
-        //test.x = game.camera.x + gameWidth/2; // for some reason this needs to be set in order to change the x later.
-
-        
 
         //BIRDS
 		birds = game.add.group();
 		birds.enableBody = true;
-
-
-		console.log('bird'+game.rnd.between(1, 5));
 		for(i = 0; i < 20; i++)
         {
         	let num = game.rnd.between(1,5);
@@ -269,8 +251,6 @@ GamePlay.prototype = {
     		bird.animations.add('fly', Phaser.Animation.generateFrameNames('bird'+num+'_left', 1, 6, '', 1), 6, true);
         }
 		
-
-
         //CLOUDS
         clouds = game.add.tileSprite(0, 0, worldWidth, 200, 'clouds');
 
@@ -297,33 +277,23 @@ GamePlay.prototype = {
         //  Start the timer running
         timer.start();
 
-        //create lava
-        lava = game.add.sprite(worldWidth, 0, 'lava');
-        game.physics.arcade.enable(lava);
-
-
         //stop main menu music create play music
         game.sound.stopAll();
         music = game.add.audio('main_music',1,true);
 
-
-        //music.volume = 2;
-        //music.play();
-
         //bring asign and dsign to top
         game.world.bringToTop(buttons);
-
-
     },
+
+    //===================================GamePlay Update=========================================
     update: function() {
         game.world.bringToTop(people);
         game.world.bringToTop(buttons);
         game.world.bringToTop(transition);
 
-        //test.frame = currentButton;
-
         clouds.autoScroll(-5,0);
 
+        //player input
         if(game.input.keyboard.isDown(Phaser.Keyboard.A)) {
             game.camera.x -= scrollSpeed;
 
@@ -337,32 +307,11 @@ GamePlay.prototype = {
             if(game.camera.x != 6400){
             clouds.autoScroll(300,0);
             }
-
         }
 
-
-        //overlap of lava and building
-        //game.physics.arcade.overlap(lava, buildings, lavaHitBuilding, null, this);
-        //game.physics.arcade.overlap(lava, people, lavaHitPeople, null, this);
-
-        if(lava.body.x < -100){
-            lava.destroy();
-            lava = game.add.sprite(worldWidth, gameHeight-groundHeight-lavaHeight, 'lava');
-            game.physics.arcade.enable(lava);
-            game.input.enabled = true;
-            timer = game.time.create(true);
-
-            //  Set a TimerEvent to occur;
-            timer.loop(timeUntilLava, apocalypseNow, this);
-
-            //  Start the timer running
-            timer.start();
-            console.log('lava gone');
-
-            game.camera.unfollow();
-        }
-
-        if(apocalypse == true && grey == false){
+        //===================SCREEN SHAKE============================
+        if(apocalypse == true && grey == false)
+        {
             shake(shakeIntensity);
         }
 
@@ -370,25 +319,13 @@ GamePlay.prototype = {
         {   
         	shiver(shakeIntensity - .0003);
         }
-
-		//birds.forEach(function(bird)
-		//{
-		//	bird.body.velocity.x = game.rnd.between(-10, 10); //set speed
-		//	bird.anchor.set(0.5,0.5);
-        //	bird.body.velocity.x += game.rnd.integerInRange(-.5,.5);
-
-        //	if(bird.body.velocity > 0)
-        //	{
-        //		bird.body.scale.x = -1;
-        //	}
-		//}, this);
     }
 }
 
+//=================================================GameOver State=====================================================
 var GameOver = function(game){};
 GameOver.prototype = {
     preload: function() {
-        console.log('GameOver: preload');
     },
     create: function() {
         console.log('GameOver: create');
@@ -402,8 +339,10 @@ GameOver.prototype = {
     }
 }
 
+
+//=========================skyPressed Function=====================================
+//places buildings
 function skyPressed(){
-    console.log("skyPressed at: X: " + game.input.mousePointer.x);
     var type_list = building_list[select];
     var frame = type_list[game.rnd.between(0, type_list.length - 1)];
     var num_peo = 1;
@@ -412,56 +351,43 @@ function skyPressed(){
 
 }
 
+//========================arrowButtonPressed Function=================================
+//select building
 var num_of_buttons = 10;
 function arrowButtonPressed(){
-    console.log("arrow Button Pressed: " + this.dir);
     arrowbuttonMusic = game.add.audio('selection_music', 1, false);
     arrowbuttonMusic.volume = 3;
     arrowbuttonMusic.play();
     currentButton += this.dir;
-    console.log(currentButton);
     if(currentButton >= num_of_buttons) currentButton = 0;
     if(currentButton < 0) currentButton = num_of_buttons-1;
     selectionButton.frame = currentButton;
     select = selectionButton.frame;
-
 }
 
-function lavaHitBuilding(lava, building){
-    console.log("lavaHitBuilding");
-    //building.kill();
-}
 
-function lavaHitPeople(lava, person){
-    console.log("lavaHitPeople")
-    //person.kill();
-    
-}
+//===========================apocalypseNow Function====================================
+//handles apocalypse
 var apocalypseMusic
 var timer2;
 function apocalypseNow(){
-    console.log("apocalypse");
     timer.stop();
+    //music
     menuMusic.stop();
-
     apocalypseMusic = game.add.audio('apocalypse_music', 1, false);
     apocalypseMusic.volume = 2;
     apocalypseMusic.play();
     
-
-
     game.load.atlas('buildings_grey', 'assets/img/buildingsheet_grey.png', 'assets/img/buildingsheet.json');
+    
+    //rain fire
     for(var i = 0; i < 100; i++){
         new Fire(game, 'fire');
     }
-    /*game.world.forEach(function(people){
-        panic(people);
-    });*/
 
     //correct tweens
     var tween = game.add.tween(transition).to( { alpha: 1 }, fadeInTime, "Linear", true);
     tween.yoyo(true, 100);
-
 
     timer2 = game.time.create(true);
 
@@ -469,9 +395,8 @@ function apocalypseNow(){
 
     timer2.start();
     sky.inputEnabled = false;
-    /*lava.body.velocity.x = -lavaSpeed;
-    game.camera.follow(lava, null, cameraFollowLavaSpeed); // make the cmera follow the lava*/
-    //game.input.enabled = false; // prevent all player input
+
+    //people panic
     for (var i = 0; i < people_living.length; i++) {
         panic(people_living[i]);
     }
@@ -487,6 +412,8 @@ function apocalypseNow(){
     apocalypse = true;
 }
 
+//==============================shake Function===============================
+//screen shake during fade in
 function shake(n){
     game.camera.shake(n, 50);
 
@@ -494,7 +421,8 @@ function shake(n){
     shakeIntensity = n;
     return(shakeIntensity);
 }
-
+//============================shiver Function===============================
+//screen shake during fade out
 function shiver(n)
 {
 	game.camera.shake(n, 50);
@@ -504,9 +432,12 @@ function shiver(n)
 	return (shakeIntensity);
 }
 
+//=========================================DOOM Function==================================================
 var timer3;
 function DOOM(){
         timer2.stop();
+
+        //handle gray scaling
         for (var i = 0; i < buildings_built.length; i++){
         turn_grey(buildings_built[i]);
         }
@@ -514,9 +445,9 @@ function DOOM(){
             turnPersonGrey(people_living[i]);
         }
 
+        //replace sky and clouds
         sky.destroy();
         sky = game.add.tileSprite(0, 0, worldWidth, gameHeight, 'sky_apocalypse');
-
         game.world.sendToBack(sky);
 
         clouds.tint = 0xde874e;
@@ -526,9 +457,7 @@ function DOOM(){
             i += 1;
         }
 
-
         grey = true;
-        console.log(grey);
 
         timer3 = game.time.create(true);
 
@@ -536,63 +465,55 @@ function DOOM(){
 
         timer3.start();
 
-
         return(grey);
 }
 
+//===========================================endgame Function=============================
+//replay button
 function endgame(){
     timer3.stop();
-    console.log("endgame");
     var replay = game.add.sprite(game.camera.width/2, game.camera.y + 50, 'replayButton');
     replay.anchor.set(0.5, 0);
     replay.inputEnabled = true;
     replay.events.onInputDown.add(startGame);
     replay.fixedToCamera = true;
 }
-function startGame(){
 
+//===========================================startGame Function==========================
+function startGame(){
     startMusic = game.add.audio('selection_music', 1, false);
     startMusic.volume = 3;
     startMusic.play();
-
     game.state.start('GamePlay');
 }
 
-function instructions(){
-    console.log('instructions Button Pressed');
-
+//=========================================instructions Function===========================
+function instructions(){;
     instructionsButton.inputEnabled = false;
     creditsButton.inputEnabled = false;
-
     instructionMusic = game.add.audio('selection_music', 1, false);
     instructionMusic.volume = 3;
     instructionMusic.play();
-
     instructions = game.add.sprite(248,78,'instructions');
     instructions.inputEnabled = true;
     instructions.events.onInputDown.add(remove_button, {param1: instructions});
-
-    //game.camera.y += 300;
 }
 
+//=====================================remove_button Function===========================
 function remove_button(){
     this.param1.kill();
-
     removeMusic = game.add.audio('selection_music', 1, false);
     removeMusic.volume = 3;
     removeMusic.play();
-
     instructionsButton.inputEnabled = true;
     creditsButton.inputEnabled = true;
 }
 
+//=================================credits Function====================================
 function credits(){
-    console.log('credits button pressed');
-
     creditsMusic = game.add.audio('selection_music', 1, false);
     creditsMusic.volume = 3;
     creditsMusic.play();
-
     credits = game.add.sprite(248,78,'credits');
     credits.inputEnabled = true;
     instructionsButton.inputEnabled = false;
@@ -600,9 +521,9 @@ function credits(){
     credits.events.onInputDown.add(remove_button, {param1: credits});
 }
 
+//==================================face Function=====================================
+//npc click interactions
 function face(sprite){
-    //add voice to different people
-
     if(sprite.typeOfPerson[5] == 7){
         old1Music = game.add.audio('old1', 1, false);
         old1Music.volume = 7;
@@ -685,6 +606,7 @@ function face(sprite){
     }
 
 }
+
 
 var Instructions = function(game){};
 Instructions.prototype = {
