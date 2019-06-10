@@ -49,14 +49,11 @@ MainMenu.prototype = {
         //building assets
         game.load.atlas('buildingButtons', 'assets/img/buildingsheet.png', 'assets/img/buildingsheet.json');
         game.load.atlas('buttons', 'assets/img/buttonsheet.png', 'assets/img/buttonsheet.json');
-        game.load.image('house1_black', 'assets/img/building/new_house1_black.png');
-        game.load.image('shop2', 'assets/img/building/shop2.png');
-        game.load.image('shop3', 'assets/img/building/shop3.png');
+        
 
         //people assets
         game.load.atlas('people', 'assets/img/peoplesheet.png', 'assets/img/peoplesheet.json');
         game.load.atlas('tiny_people', 'assets/img/tinypeoplesheet.png', 'assets/img/tinypeoplesheet.json');
-        game.load.image('stripeguy', 'assets/img/people/P6_bigger.png');
         game.load.atlas('fire', 'assets/img/firesheet.png', 'assets/img/firesheet.json');
 
         //bird assets
