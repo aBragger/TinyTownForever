@@ -268,7 +268,7 @@ GamePlay.prototype = {
 
         //fire
         fires = game.add.physicsGroup();
-
+        fires.fixedToCamera = true;
         //set Bounds
         game.world.setBounds(0,0,worldWidth,gameHeight);
 

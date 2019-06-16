@@ -77,7 +77,7 @@ function personRelease(){
 function turn_grey(building){
     var greyBuildingName = building.name;
     var grayBuilding = game.add.sprite(building.x + 150,building.y,'greybuildings', greyBuildingName);
-    grayBuilding.anchor.set(0.5, 0);
+    grayBuilding.anchor.set(0.5, 0.5);
     building.population = 0;
     building.kill();
 }
