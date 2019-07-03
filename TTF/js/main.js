@@ -534,89 +534,89 @@ function credits(){
 //==================================face Function=====================================
 //npc click interactions
 function face(sprite){
-    if(sprite.typeOfPerson[5] == 7){
+    if(sprite.ID == 7){
         old1Music = game.add.audio('old1', 1, false);
         old1Music.volume = 7;
         old1Music.play();
     }
 
-    if(sprite.typeOfPerson[5] == 17){
+    if(sprite.ID == 17){
         old2Music = game.add.audio('old2', 1, false);
         old2Music.volume = 7;
         old2Music.play();
     }
-    if(sprite.typeOfPerson[5] == 10){
+    if(sprite.ID == 10){
         womanMusic = game.add.audio('woman', 1, false);
         womanMusic.volume = 7;
         womanMusic.play();
     }
-    if((sprite.typeOfPerson[5] == 15) || (sprite.typeOfPerson[5] == 4)){
+    if((sprite.ID == 15) || (sprite.ID == 4)){
         woman1Music = game.add.audio('woman1', 1, false);
         woman1Music.volume = 7;
         woman1Music.play();
     }
-    if(sprite.typeOfPerson[5] == 16){
+    if(sprite.ID == 16){
         woman2Music = game.add.audio('woman2', 1, false);
         woman2Music.volume = 7;
         woman2Music.play();
     }
-    if(sprite.typeOfPerson[5] == 13){
+    if(sprite.ID == 13){
         woman3Music = game.add.audio('woman3', 1, false);
         woman3Music.volume = 7;
         woman3Music.play();
     }
-    if(sprite.typeOfPerson[5] == 1){
+    if(sprite.ID == 1){
         manMusic = game.add.audio('man', 1, false);
         manMusic.volume = 7;
         manMusic.play();
     }
-    if((sprite.typeOfPerson[5] == 2)|| (sprite.typeOfPerson[5] == 3)){
+    if((sprite.ID == 2)|| (sprite.ID == 3)){
         man1Music = game.add.audio('man1', 1, false);
         man1Music.volume = 7;
         man1Music.play();
     }
-    if((sprite.typeOfPerson[5] == 6) ||(sprite.typeOfPerson[5] == 14)){
+    if((sprite.ID == 6) ||(sprite.ID == 14)){
         man2Music = game.add.audio('man2', 1, false);
         man2Music.volume = 7;
         man2Music.play();
     }
-    if((sprite.typeOfPerson[5] == 11) ||(sprite.typeOfPerson[5] == 20)){
+    if((sprite.ID == 11) ||(sprite.ID == 20)){
         man3Music = game.add.audio('man3', 1, false);
         man3Music.volume = 7;
         man3Music.play();
     }
 
-    if((sprite.typeOfPerson[5] == 5) ||(sprite.typeOfPerson[5] == 19)){
+    if((sprite.ID == 5) ||(sprite.ID == 19)){
         child1Music = game.add.audio('child1', 1, false);
         child1Music.volume = 7;
         child1Music.play();
     }
 
-    if(sprite.typeOfPerson[5] == 8){
+    if(sprite.ID == 8){
         child2Music = game.add.audio('child2', 1, false);
         child2Music.volume = 7;
         child2Music.play();
     }
 
-    if(sprite.typeOfPerson[5] == 9){
+    if(sprite.ID == 9){
         child3Music = game.add.audio('child3', 1, false);
         child3Music.volume = 7;
         child3Music.play();
     }
 
-    if(sprite.typeOfPerson[5] == 18){
+    if(sprite.ID == 18){
         child4Music = game.add.audio('child4', 1, false);
         child4Music.volume = 7;
         child4Music.play();
     }
 
-    if(sprite.typeOfPerson[5] == 21){
+    if(sprite.ID == 21){
         dog1Music = game.add.audio('dog1', 1, false);
         dog1Music.volume = 7;
         dog1Music.play();
     }
 
-    if(sprite.typeOfPerson[5] == 22){
+    if(sprite.ID == 22){
         dog2Music = game.add.audio('dog2', 1, false);
         dog2Music.volume = 7;
         dog2Music.play();
