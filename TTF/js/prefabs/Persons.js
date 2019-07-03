@@ -8,15 +8,20 @@ var directionSet = [
     {pre:'Person', post:'_right',max:6},
     {pre:'Person', post:'_left', max:6},
     {pre:'Panic', post:'_right', max:8},
-    {pre:'Panic', post:'_left', max:8}];
+    {pre:'Panic', post:'_left', max:8}
+  ];
 for(var i = 1; i <= last_person_index; i++){
 
-  let frameNames = directionSet.map(params =>{
-    if(!params) return 0;
-    return Phaser.Animation.generateFrameNames(params.pre+i+params.post, 1, params.max, '', 0);
-  });
+  let frameNames = directionSet.map(
+    params => Phaser.Animation.generateFrameNames(
+      params.pre + i + params.post, 1, params.max, '', 0
+    )
+  );
   let person_id = i;
-	person_list.push({ID: person_id, frames: frameNames});
+	person_list.push({
+    ID: person_id,
+    frames: frameNames
+  });
 	idList.push(i);
 
 }
