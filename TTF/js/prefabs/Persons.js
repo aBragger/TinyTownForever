@@ -4,7 +4,7 @@ var last_person_index = 20;
 var childList = [18 - 1, 19 - 1, 9, 8, 5];
 var childIndex = 0;
 var person_list = ["INVALID PERSON"];
-var directionSet = [undefined,
+var directionSet = [
     {pre:'Person', post:'_right',max:6},
     {pre:'Person', post:'_left', max:6},
     {pre:'Panic', post:'_right', max:8},
@@ -15,11 +15,7 @@ for(var i = 1; i <= last_person_index; i++){
     if(!params) return 0;
     return Phaser.Animation.generateFrameNames(params.pre+i+params.post, 1, params.max, '', 0);
   });
-  //TODO move this info out of the array
-	var person = 'Person'+i;
   let person_id = i;
-  frameNames[0] = person;
-  frameNames.push(person_id);
 	person_list.push({ID: person_id, frames: frameNames});
 	idList.push(i);
 
@@ -29,7 +25,6 @@ for(var i = 1; i <= last_person_index; i++){
 var last_tiny_person_index = 6;
 let tiny_indexes = [3, 6, 7, 10, 14, 15, 16];
 let tiny_frames = [
-  {pre:'tinyPerson', post:'_left', max:1},
   {pre:'tinyPerson', post:'_right',max:6},
   {pre:'tinyPerson', post:'_left', max:6}
 ]
@@ -42,7 +37,6 @@ var tiny_person_list = tiny_indexes.map(
     )
   )
 );
-tiny_person_list = tiny_person_list.map(frame => {frame[0] = frame[0][0]; return frame});
 
 Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.speed = speed;
@@ -83,14 +77,14 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.clown = (myID == 12);
 	this.dog = (myID == 21 || myID == 22);
 	Phaser.Sprite.call(this, game, xStart, yStart, this.key, null);
-	this.animations.add('right', this.typeOfPerson[1]);
-	this.animations.add('left', this.typeOfPerson[2]);
-	this.animations.add('right_panic', this.typeOfPerson[3]);
-	this.animations.add('left_panic', this.typeOfPerson[4]);
+	this.animations.add('right', this.typeOfPerson[0]);
+	this.animations.add('left', this.typeOfPerson[1]);
+	this.animations.add('right_panic', this.typeOfPerson[2]);
+	this.animations.add('left_panic', this.typeOfPerson[3]);
 	this.movement_dir = 0;
 
-	if(myID == 21){this.typeOfPerson[1] = this.typeOfPerson[2][0];}
-	if(myID == 22){this.typeOfPerson[1] = this.typeOfPerson[2][0];}
+	if(myID == 21){this.typeOfPerson[0] = this.typeOfPerson[1][0];}
+	if(myID == 22){this.typeOfPerson[0] = this.typeOfPerson[1][0];}
 
 	people.add(this);
 	people_living.push(this);
