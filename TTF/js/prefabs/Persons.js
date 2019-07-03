@@ -7,10 +7,10 @@ var person_list = ["INVALID PERSON"];
 for(var i = 1; i <= last_person_index; i++){
 
 	var person = 'Person'+i;
-	var person_right = ['Person'+i+'_right1', 'Person'+i+'_right2', 'Person'+i+'_right3', 'Person'+i+'_right4', 'Person'+i+'_right5', 'Person'+i+'_right6'];
-	var person_left = ['Person'+i+'_left1', 'Person'+i+'_left2', 'Person'+i+'_left3', 'Person'+i+'_left4', 'Person'+i+'_left5', 'Person'+i+'_left6'];
-	var person_right_panic = ['Panic'+i+'_right1', 'Panic'+i+'_right2','Panic'+i+'_right3','Panic'+i+'_right4','Panic'+i+'_right5','Panic'+i+'_right6','Panic'+i+'_right7','Panic'+i+'_right8'];
-	var person_left_panic = ['Panic'+i+'_left1', 'Panic'+i+'_left2','Panic'+i+'_left3','Panic'+i+'_left4','Panic'+i+'_left5','Panic'+i+'_left6','Panic'+i+'_left7','Panic'+i+'_left8'];
+	var person_right = Phaser.Animation.generateFrameNames('Person'+i+'_right', 1, 6, '', 0);
+	var person_left = Phaser.Animation.generateFrameNames('Person'+i+'_left', 1, 6, '', 0);
+	var person_right_panic = Phaser.Animation.generateFrameNames('Panic'+i+'_right', 1, 8, '', 0);
+	var person_left_panic = Phaser.Animation.generateFrameNames('Panic'+i+'_left', 1, 8, '', 0);
 	var person_index = i;
 	person_list.push([person, person_right, person_left, person_right_panic, person_left_panic, person_index]);
 	idList.push(i);
