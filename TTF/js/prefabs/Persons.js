@@ -76,22 +76,24 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 		this.typeOfPerson = person_list[person_id];
 		this.key = 'people';
 	}
-	this.child = (this.typeOfPerson[5] == 5 || this.typeOfPerson[5] == 8 || this.typeOfPerson[5] == 9 || this.typeOfPerson[5] == 18 || this.typeOfPerson[5] == 19);
-	this.clown = (this.typeOfPerson[5] == 12);
-	this.dog = (this.typeOfPerson[5] == 21 || this.typeOfPerson[5] == 22);
-	Phaser.Sprite.call(this, game, xStart, yStart, this.key, this.typeOfPerson[0]);
+  let myID = this.typeOfPerson[5];
+  this.ID = myID;
+	this.child = (myID == 5 || myID == 8 || myID == 9 || myID == 18 || myID == 19);
+	this.clown = (myID == 12);
+	this.dog = (myID == 21 || myID == 22);
+	Phaser.Sprite.call(this, game, xStart, yStart, this.key, null);
 	this.animations.add('right', this.typeOfPerson[1]);
 	this.animations.add('left', this.typeOfPerson[2]);
 	this.animations.add('right_panic', this.typeOfPerson[3]);
 	this.animations.add('left_panic', this.typeOfPerson[4]);
 	this.movement_dir = 0;
 
-	if(this.typeOfPerson[5] == 21){this.typeOfPerson[1] = this.typeOfPerson[2][0];}
-	if(this.typeOfPerson[5] == 22){this.typeOfPerson[1] = this.typeOfPerson[2][0];}
+	if(myID == 21){this.typeOfPerson[1] = this.typeOfPerson[2][0];}
+	if(myID == 22){this.typeOfPerson[1] = this.typeOfPerson[2][0];}
 
 	people.add(this);
 	people_living.push(this);
-	if(this.typeOfPerson[5] == 12){this.speed = 0;}
+	if(myID == 12){this.speed = 0;}
 };
 
 Person.prototype = Object.create(Phaser.Sprite.prototype);
