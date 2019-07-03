@@ -20,7 +20,7 @@ for(var i = 1; i <= last_person_index; i++){
   let person_id = i;
   frameNames[0] = person;
   frameNames.push(person_id);
-	person_list.push(frameNames);
+	person_list.push({ID: person_id, frames: frameNames});
 	idList.push(i);
 
 }
@@ -73,11 +73,12 @@ Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 
 			person_id = childList[childIndex % childList.length];
 		}
-		this.typeOfPerson = person_list[person_id];
+    let info = person_list[person_id];
+		this.typeOfPerson = info.frames;
+    this.ID = info.ID;
 		this.key = 'people';
 	}
-  let myID = this.typeOfPerson[5];
-  this.ID = myID;
+  let myID = this.ID;
 	this.child = (myID == 5 || myID == 8 || myID == 9 || myID == 18 || myID == 19);
 	this.clown = (myID == 12);
 	this.dog = (myID == 21 || myID == 22);
