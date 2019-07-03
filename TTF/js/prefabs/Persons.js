@@ -4,16 +4,25 @@ var last_person_index = 20;
 var childList = [18 - 1, 19 - 1, 9, 8, 5];
 var childIndex = 0;
 var person_list = ["INVALID PERSON"];
+var directionSet = [undefined,
+    {pre:'Person', post:'_right',max:6},
+    {pre:'Person', post:'_left', max:6},
+    {pre:'Panic', post:'_right', max:8},
+    {pre:'Panic', post:'_left', max:8}];
 for(var i = 1; i <= last_person_index; i++){
 
+  let frameNames = directionSet.map(params =>{
+    if(!params) return 0;
+    return Phaser.Animation.generateFrameNames(params.pre+i+params.post, 1, params.max, '', 0);
+  });
+  //TODO move this info out of the array
 	var person = 'Person'+i;
-	var person_right = Phaser.Animation.generateFrameNames('Person'+i+'_right', 1, 6, '', 0);
-	var person_left = Phaser.Animation.generateFrameNames('Person'+i+'_left', 1, 6, '', 0);
-	var person_right_panic = Phaser.Animation.generateFrameNames('Panic'+i+'_right', 1, 8, '', 0);
-	var person_left_panic = Phaser.Animation.generateFrameNames('Panic'+i+'_left', 1, 8, '', 0);
-	var person_index = i;
-	person_list.push([person, person_right, person_left, person_right_panic, person_left_panic, person_index]);
+  let person_id = i;
+  frameNames[0] = person;
+  frameNames.push(person_id);
+	person_list.push(frameNames);
 	idList.push(i);
+
 }
 
 //tiny people
