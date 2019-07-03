@@ -26,49 +26,23 @@ for(var i = 1; i <= last_person_index; i++){
 }
 
 //tiny people
-var tiny_person_list = [];
 var last_tiny_person_index = 6;
-var tinyperson1 = 'tinyPerson3_left1';
-var tinyperson1_right = ['tinyPerson3_right1', 'tinyPerson3_right2', 'tinyPerson3_right3', 'tinyPerson3_right4', 'tinyPerson3_right5', 'tinyPerson3_right6'];
-var tinyperson1_left = ['tinyPerson3_left1', 'tinyPerson3_left2', 'tinyPerson3_left3', 'tinyPerson3_left4', 'tinyPerson3_left5', 'tinyPerson3_left6'];
-var tinyperson1_full = [tinyperson1, tinyperson1_right, tinyperson1_left];
-tiny_person_list.push(tinyperson1_full);
-
-var tinyperson2 = 'tinyPerson6_left1';
-var tinyperson2_right = ['tinyPerson6_right1', 'tinyPerson6_right2', 'tinyPerson6_right3', 'tinyPerson6_right4', 'tinyPerson6_right5', 'tinyPerson6_right6'];
-var tinyperson2_left = ['tinyPerson6_left1', 'tinyPerson6_left2', 'tinyPerson6_left3', 'tinyPerson6_left4', 'tinyPerson6_left5', 'tinyPerson6_left6'];
-var tinyperson2_full = [tinyperson2, tinyperson2_right, tinyperson2_left];
-tiny_person_list.push(tinyperson2_full);
-
-var tinyperson3 = 'tinyPerson7_left1';
-var tinyperson3_right = ['tinyPerson7_right1', 'tinyPerson7_right2', 'tinyPerson7_right3', 'tinyPerson7_right4', 'tinyPerson7_right5', 'tinyPerson7_right6'];
-var tinyperson3_left = ['tinyPerson7_left1', 'tinyPerson7_left2', 'tinyPerson7_left3', 'tinyPerson7_left4', 'tinyPerson7_left5', 'tinyPerson7_left6'];
-var tinyperson3_full = [tinyperson3, tinyperson3_right, tinyperson3_left];
-tiny_person_list.push(tinyperson3_full);
-
-var tinyperson4 = 'tinyPerson10_left1';
-var tinyperson4_right = ['tinyPerson10_right1', 'tinyPerson10_right2', 'tinyPerson10_right3', 'tinyPerson10_right4', 'tinyPerson10_right5', 'tinyPerson10_right6'];
-var tinyperson4_left = ['tinyPerson10_left1', 'tinyPerson10_left2', 'tinyPerson10_left3', 'tinyPerson10_left4', 'tinyPerson10_left5', 'tinyPerson10_left6'];
-var tinyperson4_full = [tinyperson4, tinyperson4_right, tinyperson4_left];
-tiny_person_list.push(tinyperson4_full);
-
-var tinyperson5 = 'tinyPerson14_left1';
-var tinyperson5_right = ['tinyPerson14_right1', 'tinyPerson14_right2', 'tinyPerson14_right3', 'tinyPerson14_right4', 'tinyPerson14_right5', 'tinyPerson14_right6'];
-var tinyperson5_left = ['tinyPerson14_left1', 'tinyPerson14_left2', 'tinyPerson14_left3', 'tinyPerson14_left4', 'tinyPerson14_left5', 'tinyPerson14_left6'];
-var tinyperson5_full = [tinyperson5, tinyperson5_right, tinyperson5_left];
-tiny_person_list.push(tinyperson5_full);
-
-var tinyperson6 = 'tinyPerson15_left1';
-var tinyperson6_right = ['tinyPerson15_right1', 'tinyPerson15_right2', 'tinyPerson15_right3', 'tinyPerson15_right4', 'tinyPerson15_right5', 'tinyPerson15_right6'];
-var tinyperson6_left = ['tinyPerson15_left1', 'tinyPerson15_left2', 'tinyPerson15_left3', 'tinyPerson15_left4', 'tinyPerson15_left5', 'tinyPerson15_left6'];
-var tinyperson6_full = [tinyperson6, tinyperson6_right, tinyperson6_left];
-tiny_person_list.push(tinyperson6_full);
-
-var tinyperson7 = 'tinyPerson16_left1';
-var tinyperson7_right = ['tinyPerson16_right1', 'tinyPerson16_right2', 'tinyPerson16_right3', 'tinyPerson16_right4', 'tinyPerson16_right5', 'tinyPerson16_right6'];
-var tinyperson7_left = ['tinyPerson16_left1', 'tinyPerson16_left2', 'tinyPerson16_left3', 'tinyPerson16_left4', 'tinyPerson16_left5', 'tinyPerson16_left6'];
-var tinyperson7_full = [tinyperson7, tinyperson7_right, tinyperson7_left];
-tiny_person_list.push(tinyperson7_full);
+let tiny_indexes = [3, 6, 7, 10, 14, 15, 16];
+let tiny_frames = [
+  {pre:'tinyPerson', post:'_left', max:1},
+  {pre:'tinyPerson', post:'_right',max:6},
+  {pre:'tinyPerson', post:'_left', max:6}
+]
+var tiny_person_list = tiny_indexes.map(
+  index => tiny_frames.map(
+    params => Phaser.Animation.generateFrameNames(
+      params.pre + index + params.post,
+      1, params.max,
+      '', 0
+    )
+  )
+);
+tiny_person_list = tiny_person_list.map(frame => {frame[0] = frame[0][0]; return frame});
 
 Person = function(game, xStart, yStart, isTiny, speed, adult = true) {
 	this.speed = speed;
